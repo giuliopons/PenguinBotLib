@@ -39,12 +39,12 @@ void Penguin::setSerialFlag(boolean flag) {
   serial_flag = flag;
 }
 
-void Penguin::setIrValue(char v) {
-  irValue = v;
+void Penguin::setBluetoothValue(char v) {
+  btValue = v;
 }
 
-char Penguin::getIrValue() {
-  return irValue;
+char Penguin::getBluetoothValue() {
+  return btValue;
 }
 
 /**
@@ -59,8 +59,8 @@ void Penguin::getCommand()
 {
     if (Serial.available())
     {
-        irValue = Serial.read();
-        if (irValue && irValue != '\0')
+        btValue = Serial.read();
+        if (btValue && btValue != '\0')
         {
             // Serial.print("new data: ");
             // Serial.println(irValue);
@@ -71,7 +71,7 @@ void Penguin::getCommand()
         {
             // Serial.print("error data: ");
             // Serial.println(irValue);
-            irValue = '\0';
+            btValue = '\0';
         }
     }
      Test_voltageMeasure();// Realization of Voltage Detection

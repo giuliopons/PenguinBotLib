@@ -87,8 +87,8 @@ class Penguin {
 
     void setSerialFlag(boolean flag);
     bool getSerialFlag();
-    char getIrValue();
-    void setIrValue(char v);
+    char getBluetoothValue();
+    void setBluetoothValue(char v);
     void getCommand();
 
     void trimServo(char btn);
@@ -118,7 +118,7 @@ class Penguin {
 
     int t = 495;
     double pause = 0;
-    char irValue = '\0';            // it's "null", so if('\0') è false
+    char btValue = '\0';            // it's "null", so if('\0') è false
     bool serial_flag = false;       // becomes "true" when there is serial communication
     float increment[N_SERVOS];
     unsigned long final_time;

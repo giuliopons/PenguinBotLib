@@ -31,8 +31,8 @@
 #define BTN_YR_SUB   'd'
 #define BTN_YL_SUB   'e'
 
-// CUSTOM COMMANDS
-#define BTN_TRACK    'r'             // Play a random track
+// NEW CUSTOM COMMANDS
+#define BTN_TRACK   'r'             // Play a random track
 #define BTN_PROG    'p'              // execute the prog() function
 
 /*
@@ -81,6 +81,7 @@ bool danceFlag = false;
 bool progFlag = false;
 unsigned long preMp3Millis;
 
+// time unit
 int t = 495;            
 
 unsigned long preMp3MillisStop_OBSTACLE;
@@ -89,16 +90,15 @@ unsigned long preMp3MillisStop_FOLLOW;
 /* Hardware interface mapping mp3 */
 #define SOFTWARE_RXD A2 //Software implementation of serial interface (audio module driver interface)
 #define SOFTWARE_TXD A3
-
 NeoSWSerial mp3Serial(SOFTWARE_RXD, SOFTWARE_TXD);
 MY1690_16S mp3(mp3Serial);
 
+// the new penguin object!
 Penguin robot(mp3);
 
 /*
    Custom program
 */
-
 void prog() {
 
   robot.servoAttach();
@@ -131,14 +131,12 @@ void setup()
 
   mp3.stopPlay();
   delay(10);
-  //mp3.playSong(8, mp3.volume);
 
   robot.servoInit();
   robot.servoAttach();
   robot.homes(200);
   robot.servoDetach();
   robot.startAnimation();
-  //prog();
 }
 
 
@@ -146,12 +144,12 @@ void setup()
 void loop()
 {
 
-  char irValue = robot.getIrValue();
+  char btValue = robot.getBluetoothValue();
   
-  if (irValue != '\0')// Bluetooth serial port data stream on app side (character acquisition is completed in timer 2)
+  if (btValue != '\0')// Bluetooth serial port data stream on app side (character acquisition is completed in timer 2)
   {
     robot.setSerialFlag(false);
-    switch (irValue)
+    switch (btValue)
     {
       case BTN_UP:
         mp3.stopPlay();
@@ -283,7 +281,7 @@ void loop()
     }
     if (robot.getSerialFlag() == false)
     {
-      robot.setIrValue('\0'); // Data Command Clearing Serial Cache
+      robot.setBluetoothValue('\0'); // Data Command Clearing Serial Cache
     }
   }
 
