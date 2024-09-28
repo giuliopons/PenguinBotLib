@@ -81,9 +81,6 @@ bool danceFlag = false;
 bool progFlag = false;
 unsigned long preMp3Millis;
 
-// time unit
-// int t = 495;            
-
 unsigned long preMp3MillisStop_OBSTACLE;
 unsigned long preMp3MillisStop_FOLLOW;
 
@@ -97,18 +94,19 @@ MY1690_16S mp3(mp3Serial);
 Penguin robot(mp3);
 
 /*
-   Custom program
+   Custom example program
 */
 void prog() {
 
-  Serial.println("ciao");
-
   robot.servoAttach();
   robot.home();
-  mp3.playSong(9, mp3.volume);
-  robot.walk(10, 1);
-  robot.home();
-  robot.sitdown();
+
+robot.run(15);
+  
+  // mp3.playSong(9, mp3.volume);
+  //robot.walk(10, 1);
+  //robot.home();
+  //robot.sitdown();
   robot.home();
   robot.servoDetach();
 
@@ -123,7 +121,7 @@ void setup()
 {
   Serial.begin(9600);
 
-  /* Questo significa che ogni 50 millisecondi, la funzione getCommand viene chiamata, permettendo al robot di verificare se sono stati ricevuti nuovi comandi attraverso la comunicazione seriale. */
+  /* This means that every 50 milliseconds, the getCommand function is called, allowing the robot to check if new commands have been received through serial communication. */
   MsTimer2::set(50, getCommand);
   MsTimer2::start();
 
@@ -139,7 +137,6 @@ void setup()
   robot.homes(200);
   robot.servoDetach();
   // robot.startAnimation();
-
   prog();
 }
 

@@ -65,7 +65,6 @@ void Penguin::getCommand()
             // Serial.print("new data: ");
             // Serial.println(irValue);
             serial_flag = true;
-            //setSerialFlag(true);
         }
         else
         {
@@ -265,7 +264,36 @@ bool Penguin::oscillate(int A[N_SERVOS], int O[N_SERVOS], int T, double phase_di
 }
 
 
-
+/*
+ * note:
+ * all the methods that could be interrupted (by the bluetooth command) return false;
+ * 
+ * a chain of actions that could be interrupted is placed in expressions like the following. So if there isn't interruption
+ * the result will complete all the chain evaluating false each block.
+ * if interruption happens, a called method return true and stop the evaluation of expression returning true;
+ * 
+ * 
+ *     bool Penguin:actionNew() {
+ *     if (
+                moveNServos(T * 0.2, move1) ||
+                delays(t / 5) ||
+                moveNServos(T * 0.2, move2) ||
+                delays(t / 5) ||
+                moveNServos(T * 0.2, move3) ||
+                delays(t / 5) ||
+                moveNServos(T * 0.2, move4) ||
+                delays(t / 5) ||
+                moveNServos(T * 0.2, move5) ||
+                delays(t / 5) ||
+                moveNServos(T * 0.2, move6) ||
+                delays(t / 5) )
+                 returm true;
+          return false;
+       }          
+ * 
+ * interruption happens with serial_flag true. It's triggered by a timer (MsTimer2) that is called very often
+ * 
+ */
 bool Penguin::home()
 {
     int move1[] = {90, 90, 90, 90};
@@ -383,7 +411,7 @@ bool Penguin::moonWalkLeft(int steps, int T = -1)
     return false;
 }
 
-// not used?
+/* crusaito */
 bool Penguin::crusaito(int steps, int T = -1)
 {
     if (T==-1) T = t * 2; // 2 decided by me, need to be tested
@@ -437,7 +465,7 @@ bool Penguin::flapping(int steps, int T = -1)
     return false;
 }
 
-// not used?
+/* run */
 bool Penguin::run(int steps, int T = -1)
 {
     if (T==-1) T = t;  // t decided by me need to be tested
@@ -454,20 +482,6 @@ bool Penguin::run(int steps, int T = -1)
 bool Penguin::backyard(int steps, int T = -1)
 {
     if (T==-1) T = t * 4;
-    int A[4] = {15, 15, 30, 30};
-    int O[4] = {0, 0, 0, 0};
-    double phase_diff[4] = {DEG2RAD(0), DEG2RAD(0), DEG2RAD(-90), DEG2RAD(-90)};
-
-    for (int i = 0; i < steps; i++)
-        if (oscillate(A, O, T, phase_diff))
-            return true;
-    return false;
-}
-
-// not used?
-bool Penguin::backyardSlow(int steps, int T = -1)
-{
-    if (T==-1) T = t;  // t decided by me need to be tested
     int A[4] = {15, 15, 30, 30};
     int O[4] = {0, 0, 0, 0};
     double phase_diff[4] = {DEG2RAD(0), DEG2RAD(0), DEG2RAD(-90), DEG2RAD(-90)};
