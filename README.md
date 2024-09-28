@@ -11,5 +11,9 @@ What I've changed:
 * added a `prog` function to handle a new simple class for experiments
 * renamed functions with more correct names (ex: ir is infrared, but in Penguin v.2 there is bluetooth not ir)
 * bluetooth behaviour with original app is still the same
+* made t (time unit) optional from function, to simplify usage
 
-
+Next steps:
+* simplify usage
+* pack it into an Arduino IDE library
+* make samples
