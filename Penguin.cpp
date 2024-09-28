@@ -143,8 +143,11 @@ void Penguin::servoInit()
 /*
  Walking control realization:
 */
-bool Penguin::walk(int steps, int T, int dir)
+bool Penguin::walk(int steps, int dir, int T = -1)
 {
+    Serial.println("test");
+  
+    if (T == -1) T = t * 3;
 
     int move1[] = {90, 90 + 35, 90 + 15, 90 + 15};
     int move2[] = {90 + 25, 90 + 30, 90 + 15, 90 + 15};
@@ -284,8 +287,10 @@ void Penguin::homes(int millis_t)
 
 
 
-bool Penguin::turn(int steps, int T, int dir)
+bool Penguin::turn(int steps, int dir, int T = -1)
 {
+    if (T==-1) T = t * 4;
+  
     int move1[] = {90 - 55, 90 - 20, 90 + 20, 90 + 20};
     int move2[] = {90 - 20, 90 - 20, 90 + 20, 90 - 20};
     int move3[] = {90 + 20, 90 + 55, 90 + 20, 90 - 20};
@@ -352,8 +357,9 @@ bool Penguin::turn(int steps, int T, int dir)
     return false;
 }
 /* Turn right*/
-bool Penguin::moonWalkRight(int steps, int T)
+bool Penguin::moonWalkRight(int steps, int T = -1)
 {
+    if(T==-1) T = t*2;
     int A[4] = {25, 25, 0, 0};
     int O[4] = {-15, 15, 0, 0};
     double phase_diff[4] = {DEG2RAD(0), DEG2RAD(180 + 120), DEG2RAD(90), DEG2RAD(90)};
@@ -364,8 +370,9 @@ bool Penguin::moonWalkRight(int steps, int T)
     return false;
 }
 /* Turn left*/
-bool Penguin::moonWalkLeft(int steps, int T)
+bool Penguin::moonWalkLeft(int steps, int T = -1)
 {
+    if(T==-1) T = t*2;
     int A[4] = {25, 25, 0, 0};
     int O[4] = {-15, 15, 0, 0};
     double phase_diff[4] = {DEG2RAD(0), DEG2RAD(180 - 120), DEG2RAD(90), DEG2RAD(90)};
@@ -376,8 +383,10 @@ bool Penguin::moonWalkLeft(int steps, int T)
     return false;
 }
 
-bool Penguin::crusaito(int steps, int T)
+// not used?
+bool Penguin::crusaito(int steps, int T = -1)
 {
+    if (T==-1) T = t * 2; // 2 decided by me, need to be tested
     int A[4] = {25, 25, 30, 30};
     int O[4] = {-15, 15, 0, 0};
     double phase_diff[4] = {DEG2RAD(0), DEG2RAD(180 + 120), DEG2RAD(90), DEG2RAD(90)};
@@ -388,8 +397,9 @@ bool Penguin::crusaito(int steps, int T)
         return true;
     return false;
 }
-bool Penguin::swing(int steps, int T)
+bool Penguin::swing(int steps, int T = -1)
 {
+    if (T==-1) T = t;
     int A[4] = {25, 25, 0, 0};
     int O[4] = {-15, 15, 0, 0};
     double phase_diff[4] = {DEG2RAD(0), DEG2RAD(0), DEG2RAD(90), DEG2RAD(90)};
@@ -400,8 +410,9 @@ bool Penguin::swing(int steps, int T)
     return false;
 }
 
-bool Penguin::upDown(int steps, int T)
+bool Penguin::upDown(int steps, int T = -1)
 {
+    if (T==-1) T = t;
     int A[4] = {25, 25, 0, 0};
     int O[4] = {-15, 15, 0, 0};
     double phase_diff[4] = {DEG2RAD(180), DEG2RAD(0), DEG2RAD(270), DEG2RAD(270)};
@@ -413,8 +424,9 @@ bool Penguin::upDown(int steps, int T)
     return false;
 }
 
-bool Penguin::flapping(int steps, int T)
+bool Penguin::flapping(int steps, int T = -1)
 {
+    if (T==-1) T = t;
     int A[4] = {15, 15, 8, 8};
     int O[4] = {-A[0], A[1], 0, 0};
     double phase_diff[4] = {DEG2RAD(0), DEG2RAD(180), DEG2RAD(-90), DEG2RAD(90)};
@@ -425,8 +437,10 @@ bool Penguin::flapping(int steps, int T)
     return false;
 }
 
-bool Penguin::run(int steps, int T)
+// not used?
+bool Penguin::run(int steps, int T = -1)
 {
+    if (T==-1) T = t;  // t decided by me need to be tested
     int A[4] = {10, 10, 10, 10};
     int O[4] = {0, 0, 0, 0};
     double phase_diff[4] = {DEG2RAD(0), DEG2RAD(0), DEG2RAD(90), DEG2RAD(90)};
@@ -437,8 +451,9 @@ bool Penguin::run(int steps, int T)
     return false;
 }
 
-bool Penguin::backyard(int steps, int T)
+bool Penguin::backyard(int steps, int T = -1)
 {
+    if (T==-1) T = t * 4;
     int A[4] = {15, 15, 30, 30};
     int O[4] = {0, 0, 0, 0};
     double phase_diff[4] = {DEG2RAD(0), DEG2RAD(0), DEG2RAD(-90), DEG2RAD(-90)};
@@ -449,8 +464,10 @@ bool Penguin::backyard(int steps, int T)
     return false;
 }
 
-bool Penguin::backyardSlow(int steps, int T)
+// not used?
+bool Penguin::backyardSlow(int steps, int T = -1)
 {
+    if (T==-1) T = t;  // t decided by me need to be tested
     int A[4] = {15, 15, 30, 30};
     int O[4] = {0, 0, 0, 0};
     double phase_diff[4] = {DEG2RAD(0), DEG2RAD(0), DEG2RAD(-90), DEG2RAD(-90)};
@@ -461,111 +478,117 @@ bool Penguin::backyardSlow(int steps, int T)
     return false;
 }
 
-bool Penguin::goingUp(int tempo)
+bool Penguin::goingUp(int T = -1)
 {
+    if (T==-1) T = t;
     int move1[] = {50, 130, 90, 90};
-    if (moveNServos(tempo * HIGH_RATE, move1) ||
-        delays(tempo / 2) ||
+    if (moveNServos(T * HIGH_RATE, move1) ||
+        delays(T / 2) ||
         home())
         return true;
     return false;
 }
 
-bool Penguin::drunk(int tempo)
+bool Penguin::drunk(int T = -1)
 {
+    if (T==-1) T = t;
     int move1[] = {70, 70, 90, 90};
     int move2[] = {110, 110, 90, 90};
     int move3[] = {70, 70, 90, 90};
     int move4[] = {110, 110, 90, 90};
-    if (moveNServos(tempo * MID_RATE, move1) ||
-        moveNServos(tempo * MID_RATE, move2) ||
-        moveNServos(tempo * MID_RATE, move3) ||
-        moveNServos(tempo * MID_RATE, move4) ||
+    if (moveNServos(T * MID_RATE, move1) ||
+        moveNServos(T * MID_RATE, move2) ||
+        moveNServos(T * MID_RATE, move3) ||
+        moveNServos(T * MID_RATE, move4) ||
         home())
         return true;
     return false;
 }
 
-bool Penguin::noGravity(int tempo)
+bool Penguin::noGravity(int T)
 {
+    if (T==-1) T = t;
     int move1[] = {120, 140, 90, 90};
     int move2[] = {120, 30, 90, 90};
     int move3[] = {120, 120, 90, 90};
     int move4[] = {120, 30, 120, 120};
     int move5[] = {120, 30, 60, 60};
-    if (moveNServos(tempo * MID_RATE, move1) ||
-        delays(tempo) ||
-        moveNServos(tempo * MID_RATE, move2) ||
-        moveNServos(tempo * MID_RATE, move3) ||
-        moveNServos(tempo * MID_RATE, move2) ||
-        delays(tempo) ||
-        moveNServos(tempo * LOW_RATE, move4) ||
-        delays(tempo) ||
-        moveNServos(tempo * LOW_RATE, move5) ||
-        delays(tempo) ||
-        moveNServos(tempo * LOW_RATE, move4) ||
-        delays(tempo) ||
+    if (moveNServos(T * MID_RATE, move1) ||
+        delays(T) ||
+        moveNServos(T * MID_RATE, move2) ||
+        moveNServos(T * MID_RATE, move3) ||
+        moveNServos(T * MID_RATE, move2) ||
+        delays(T) ||
+        moveNServos(T * LOW_RATE, move4) ||
+        delays(T) ||
+        moveNServos(T * LOW_RATE, move5) ||
+        delays(T) ||
+        moveNServos(T * LOW_RATE, move4) ||
+        delays(T) ||
         home())
         return true;
     return false;
 }
 
-bool Penguin::kickLeft(int tempo)
+bool Penguin::kickLeft(int T = -1)
 {
+   if(T==-1) T=t;
     int move1[] = {120, 140, 90, 90};
     int move2[] = {120, 90, 90, 90};
     int move3[] = {120, 120, 90, 90};
     int move4[] = {120, 90, 120, 120};
     int move5[] = {120, 120, 60, 60};
-    if (moveNServos(tempo * MID_RATE, move1) ||
-        delays(tempo) ||
-        moveNServos(tempo * MID_RATE, move2) ||
-        delays(tempo / 4) ||
-        moveNServos(tempo * MID_RATE, move3) ||
-        delays(tempo / 4) ||
-        moveNServos(tempo * LOW_RATE, move4) ||
-        delays(tempo / 4) ||
-        moveNServos(tempo * LOW_RATE, move5) ||
-        delays(tempo / 4) ||
+    if (moveNServos(T * MID_RATE, move1) ||
+        delays(T) ||
+        moveNServos(T * MID_RATE, move2) ||
+        delays(T / 4) ||
+        moveNServos(T * MID_RATE, move3) ||
+        delays(T / 4) ||
+        moveNServos(T * LOW_RATE, move4) ||
+        delays(T / 4) ||
+        moveNServos(T * LOW_RATE, move5) ||
+        delays(T / 4) ||
         home())
         return true;
     return false;
 }
 
-bool Penguin::kickRight(int tempo)
+bool Penguin::kickRight(int T=-1)
 {
+    if(T==-1) T=t;
     int move1[] = {40, 60, 90, 90};
     int move2[] = {90, 60, 90, 90};
     int move3[] = {60, 60, 90, 90};
     int move4[] = {90, 60, 120, 120};
     int move5[] = {60, 60, 60, 60};
-    if (moveNServos(tempo * MID_RATE, move1) ||
-        delays(tempo) ||
-        moveNServos(tempo * MID_RATE, move2) ||
-        delays(tempo / 4) ||
-        moveNServos(tempo * MID_RATE, move3) ||
-        delays(tempo / 4) ||
-        moveNServos(tempo * LOW_RATE, move4) ||
-        delays(tempo / 4) ||
-        moveNServos(tempo * LOW_RATE, move5) ||
-        delays(tempo / 4) ||
+    if (moveNServos(T * MID_RATE, move1) ||
+        delays(T) ||
+        moveNServos(T * MID_RATE, move2) ||
+        delays(T / 4) ||
+        moveNServos(T * MID_RATE, move3) ||
+        delays(T / 4) ||
+        moveNServos(T * LOW_RATE, move4) ||
+        delays(T / 4) ||
+        moveNServos(T * LOW_RATE, move5) ||
+        delays(T / 4) ||
         home())
         return true;
     return false;
 }
 
-bool Penguin::legRaise(int tempo, int dir)
+bool Penguin::legRaise(int dir, int T=-1)
 {
+    if(T==-1) T = t;
     if (dir)
     {
         int move1[] = {70, 70, 60, 60};
-        if (moveNServos(tempo * MID_RATE, move1) || delays(tempo))
+        if (moveNServos(T * MID_RATE, move1) || delays(T))
             return true;
     }
     else
     {
         int move1[] = {110, 110, 120, 120};
-        if (moveNServos(tempo * MID_RATE, move1) || delays(tempo))
+        if (moveNServos(T * MID_RATE, move1) || delays(T))
             return true;
     }
     if (home())
@@ -573,23 +596,24 @@ bool Penguin::legRaise(int tempo, int dir)
     return false;
 }
 
-bool Penguin::legRaise1(int tempo, int dir)
+bool Penguin::legRaise1(int T, int dir)
 {
+    if(T==-1) T = t;
     if (dir)
     {
         int move1[] = {50, 60, 90, 90};
         int move2[] = {60, 60, 120, 90};
         int move3[] = {60, 60, 60, 90};
-        if (moveNServos(tempo * MID_RATE, move1) ||
-            delays(tempo) ||
-            moveNServos(tempo * LOW_RATE, move2) ||
-            delays(tempo / 4) ||
-            moveNServos(tempo * LOW_RATE, move3) ||
-            delays(tempo / 4) ||
-            moveNServos(tempo * LOW_RATE, move2) ||
-            delays(tempo / 4) ||
-            moveNServos(tempo * LOW_RATE, move3) ||
-            delays(tempo / 4))
+        if (moveNServos(T * MID_RATE, move1) ||
+            delays(T) ||
+            moveNServos(T * LOW_RATE, move2) ||
+            delays(T / 4) ||
+            moveNServos(T * LOW_RATE, move3) ||
+            delays(T / 4) ||
+            moveNServos(T * LOW_RATE, move2) ||
+            delays(T / 4) ||
+            moveNServos(T * LOW_RATE, move3) ||
+            delays(T / 4))
             return true;
     }
     else
@@ -597,16 +621,16 @@ bool Penguin::legRaise1(int tempo, int dir)
         int move1[] = {120, 130, 90, 90};
         int move2[] = {120, 120, 90, 60};
         int move3[] = {120, 120, 90, 120};
-        if (moveNServos(tempo, move1) ||
-            delays(tempo) ||
-            moveNServos(tempo * MID_RATE, move2) ||
-            delays(tempo / 4) ||
-            moveNServos(tempo * MID_RATE, move3) ||
-            delays(tempo / 4) ||
-            moveNServos(tempo * MID_RATE, move2) ||
-            delays(tempo / 4) ||
-            moveNServos(tempo * MID_RATE, move3) ||
-            delays(tempo / 4))
+        if (moveNServos(T, move1) ||
+            delays(T) ||
+            moveNServos(T * MID_RATE, move2) ||
+            delays(T / 4) ||
+            moveNServos(T * MID_RATE, move3) ||
+            delays(T / 4) ||
+            moveNServos(T * MID_RATE, move2) ||
+            delays(T / 4) ||
+            moveNServos(T * MID_RATE, move3) ||
+            delays(T / 4))
             return true;
     }
     if (home())
@@ -614,18 +638,19 @@ bool Penguin::legRaise1(int tempo, int dir)
     return false;
 }
 
-bool Penguin::legRaise2(int steps, int tempo, int dir)
+bool Penguin::legRaise2(int steps, int dir, int T=-1)
 {
+    if(T==-1) T = t;
     if (dir)
     {
         int move1[] = {20, 60, 90, 90};
         int move2[] = {20, 90, 120, 90};
         for (int i = 0; i < steps; i++)
         {
-            if (moveNServos(tempo * 0.7, move1) ||
-                delays(tempo / 4) ||
-                moveNServos(tempo * 0.7, move2) ||
-                delays(tempo / 4))
+            if (moveNServos(T * 0.7, move1) ||
+                delays(T / 4) ||
+                moveNServos(T * 0.7, move2) ||
+                delays(T / 4))
                 return true;
         }
     }
@@ -635,10 +660,10 @@ bool Penguin::legRaise2(int steps, int tempo, int dir)
         int move2[] = {90, 160, 90, 60};
         for (int i = 0; i < steps; i++)
         {
-            if (moveNServos(tempo * 0.7, move1) ||
-                delays(tempo / 4) ||
-                moveNServos(tempo * 0.7, move2) ||
-                delays(tempo / 4))
+            if (moveNServos(T * 0.7, move1) ||
+                delays(T / 4) ||
+                moveNServos(T * 0.7, move2) ||
+                delays(T / 4))
                 return true;
         }
     }
@@ -647,18 +672,19 @@ bool Penguin::legRaise2(int steps, int tempo, int dir)
     return false;
 }
 
-bool Penguin::legRaise3(int steps, int tempo, int dir)
+bool Penguin::legRaise3(int steps, int dir, int T=-1)
 {
+    if(T==-1) T = t;
     if (dir)
     {
         int move1[] = {20, 60, 90, 90};
         int move2[] = {20, 90, 90, 90};
         for (int i = 0; i < steps; i++)
         {
-            if (moveNServos(tempo * 0.5, move1) ||
-                delays(tempo / 4) ||
-                moveNServos(tempo * 0.5, move2) ||
-                delays(tempo / 4))
+            if (moveNServos(T * 0.5, move1) ||
+                delays(T / 4) ||
+                moveNServos(T * 0.5, move2) ||
+                delays(T / 4))
                 return true;
         }
     }
@@ -668,10 +694,10 @@ bool Penguin::legRaise3(int steps, int tempo, int dir)
         int move2[] = {90, 160, 90, 90};
         for (int i = 0; i < steps; i++)
         {
-            if (moveNServos(tempo * 0.5, move1) ||
-                delays(tempo / 4) ||
-                moveNServos(tempo * 0.5, move2) ||
-                delays(tempo / 4))
+            if (moveNServos(T * 0.5, move1) ||
+                delays(T / 4) ||
+                moveNServos(T * 0.5, move2) ||
+                delays(T / 4))
                 return true;
         }
     }
@@ -680,27 +706,28 @@ bool Penguin::legRaise3(int steps, int tempo, int dir)
     return false;
 }
 
-bool Penguin::legRaise4(int tempo, int dir)
+bool Penguin::legRaise4(int dir, int T = -1)
 {
+    if(T==-1) T = t;
     if (dir)
     {
         int move1[] = {20, 60, 90, 90};
         int move2[] = {20, 90, 90, 90};
 
-        if (moveNServos(tempo * MID_RATE, move1) ||
-            delays(tempo / 4) ||
-            moveNServos(tempo * MID_RATE, move2) ||
-            delays(tempo / 4))
+        if (moveNServos(T * MID_RATE, move1) ||
+            delays(T / 4) ||
+            moveNServos(T * MID_RATE, move2) ||
+            delays(T / 4))
             return true;
     }
     else
     {
         int move1[] = {120, 160, 90, 90};
         int move2[] = {90, 160, 90, 90};
-        if (moveNServos(tempo * MID_RATE, move1) ||
-            delays(tempo / 4) ||
-            moveNServos(tempo * MID_RATE, move2) ||
-            delays(tempo / 4))
+        if (moveNServos(T * MID_RATE, move1) ||
+            delays(T / 4) ||
+            moveNServos(T * MID_RATE, move2) ||
+            delays(T / 4))
             return true;
     }
     if (home())
@@ -721,16 +748,17 @@ bool Penguin::sitdown()
     return false;
 }
 
-bool Penguin::lateral_fuerte(boolean dir, int tempo)
+bool Penguin::lateral_fuerte(boolean dir, int T=-1)
 {
+   if(T==-1) T= t;
     if (dir)
     {
         int move1[] = {CENTRE - 2 * AMPLITUDE, CENTRE - AMPLITUDE, CENTRE, CENTRE};
         int move2[] = {CENTRE + AMPLITUDE, CENTRE - AMPLITUDE, CENTRE, CENTRE};
         int move3[] = {CENTRE - 2 * AMPLITUDE, CENTRE - AMPLITUDE, CENTRE, CENTRE};
-        if (moveNServos(tempo * LOW_RATE, move1) || delays(tempo * 2) ||
-            moveNServos(tempo * ULTRA_HIGH_RATE, move2) || delays(tempo / 2) ||
-            moveNServos(tempo * ULTRA_HIGH_RATE, move3) || delays(tempo))
+        if (moveNServos(T * LOW_RATE, move1) || delays(T * 2) ||
+            moveNServos(T * ULTRA_HIGH_RATE, move2) || delays(T / 2) ||
+            moveNServos(T * ULTRA_HIGH_RATE, move3) || delays(T))
             return true;
     }
     else
@@ -738,9 +766,9 @@ bool Penguin::lateral_fuerte(boolean dir, int tempo)
         int move1[] = {CENTRE + AMPLITUDE, CENTRE + 2 * AMPLITUDE, CENTRE, CENTRE};
         int move2[] = {CENTRE + AMPLITUDE, CENTRE - AMPLITUDE, CENTRE, CENTRE};
         int move3[] = {CENTRE + AMPLITUDE, CENTRE + 2 * AMPLITUDE, CENTRE, CENTRE};
-        if (moveNServos(tempo * LOW_RATE, move1) || delays(tempo * 2) ||
-            moveNServos(tempo * ULTRA_HIGH_RATE, move2) || delays(tempo / 2) ||
-            moveNServos(tempo * ULTRA_HIGH_RATE, move3) || delays(tempo))
+        if (moveNServos(T * LOW_RATE, move1) || delays(T * 2) ||
+            moveNServos(T * ULTRA_HIGH_RATE, move2) || delays(T / 2) ||
+            moveNServos(T * ULTRA_HIGH_RATE, move3) || delays(T))
             return true;
     }
     if (home())
@@ -864,10 +892,10 @@ void Penguin::dance()
 {
     primera_parte();
     segunda_parte();
-    moonWalkLeft(4, t * 2);
-    moonWalkRight(4, t * 2);
-    moonWalkLeft(4, t * 2);
-    moonWalkRight(4, t * 2);
+    moonWalkLeft(4);
+    moonWalkRight(4);
+    moonWalkLeft(4);
+    moonWalkRight(4);
     primera_parte();
 
     for (int i = 0; i < 16; i++)
@@ -876,10 +904,10 @@ void Penguin::dance()
         delays(3 * t / 4);
     }
 
-    moonWalkRight(4, t * 2);
-    moonWalkLeft(4, t * 2);
-    moonWalkRight(4, t * 2);
-    moonWalkLeft(4, t * 2);
+    moonWalkRight(4);
+    moonWalkLeft(4);
+    moonWalkRight(4);
+    moonWalkLeft(4);
 
     drunk(t * 4);
     drunk(t * 4);
@@ -895,7 +923,7 @@ void Penguin::dance()
     drunk(t / 2);
 
     delays(t * 4);
-    walk(2, t * 3, 1);
+    walk(2, 1, t * 3);
     home();
     backyard(2, t * 2);
     home();
@@ -923,7 +951,7 @@ void Penguin::dance2()
         drunk(t) ||
         kickLeft(t) ||
         kickRight(t) ||
-        walk(2, t * 3, 1) ||
+        walk(2, 1, t * 3) ||
         home() ||
         backyard(2, t * 4) ||
         noGravity(t) ||
@@ -937,16 +965,16 @@ void Penguin::dance2()
 void Penguin::dance3()
 {
     if (sitdown() ||
-        legRaise(t, 1) ||
+        legRaise(1, t) ||
         swing(5, t) ||
-        legRaise1(t, 1) ||
-        walk(2, t * 3, 1) ||
+        legRaise1(1,t) ||
+        walk(2, 1, t * 3) ||
         home() ||
         noGravity(t) ||
         kickRight(t) ||
         goingUp(t) ||
         kickLeft(t) ||
-        legRaise4(t, 1) ||
+        legRaise4(1, t) ||
         backyard(2, t * 4) ||
         drunk(t) ||
         lateral_fuerte(1, 500) ||
@@ -960,23 +988,23 @@ void Penguin::dance4()
     if (flapping(1, t) ||
         drunk(t) ||
         kickLeft(t) ||
-        walk(2, t * 3, 1) ||
+        walk(2, 1, t * 3) ||
         home() ||
         lateral_fuerte(0, t) ||
         sitdown() ||
-        legRaise(t, 1) ||
+        legRaise(1, t) ||
         swing(5, t) ||
         backyard(2, t * 4) ||
         goingUp(t) ||
         noGravity(t) ||
         upDown(5, t) ||
-        legRaise1(t, 1) ||
-        legRaise2(4, t, 0) ||
+        legRaise1(1, t) ||
+        legRaise2(4, 0, t) ||
         kickRight(t) ||
         goingUp(t) ||
-        legRaise3(4, t, 1) ||
+        legRaise3(4, 1,t) ||
         kickLeft(t) ||
-        legRaise4(t, 1) ||
+        legRaise4( 1, t) ||
         segunda_parte() ||
         sitdown())
         return;
@@ -1025,14 +1053,14 @@ void Penguin::obstacleMode()
         if (st188Val_L >= 400 && st188Val_R >= 400)
         {
             servoAttach();
-            walk(3, t * 4, -1);
+            walk(3, -1, t * 4);
             if (turnFlag)
             {
-                turn(3, t * 4, 1);
+                turn(3, 1, t * 4);
             }
             else
             {
-                turn(3, t * 4, -1);
+                turn(3, -1, t * 4);
             }
             servoDetach();
         }
@@ -1040,14 +1068,14 @@ void Penguin::obstacleMode()
         {
             turnFlag = true;
             servoAttach();
-            turn(3, t * 4, 1);
+            turn(3, 1, t * 4);
             servoDetach();
         }
         else if (st188Val_L < 400 && st188Val_R >= 400)
         {
             turnFlag = false;
             servoAttach();
-            turn(3, t * 4, -1);
+            turn(3, -1, t * 4);
             servoDetach();
         }
         else if (st188Val_L < 400 && st188Val_R < 400)
@@ -1055,14 +1083,14 @@ void Penguin::obstacleMode()
             if (distance_value < 5)
             {
                 servoAttach();
-                walk(3, t * 3, -1);
+                walk(3, -1, t * 3);
                 if (turnFlag)
                 {
-                    turn(3, t * 4, 1);
+                    turn(3, 1, t * 4);
                 }
                 else
                 {
-                    turn(3, t * 4, -1);
+                    turn(3, -1, t * 4);
                 }
                 servoDetach();
             }
@@ -1071,18 +1099,18 @@ void Penguin::obstacleMode()
                 servoAttach();
                 if (turnFlag)
                 {
-                    turn(1, t * 4, 1);
+                    turn(1, 1, t * 4);
                 }
                 else
                 {
-                    turn(1, t * 4, -1);
+                    turn(1, -1, t * 4);
                 }
                 servoDetach();
             }
             else
             {
                 servoAttach();
-                walk(1, t * 3, 1);
+                walk(1, 1, t * 3);
                 servoDetach();
             }
         }
@@ -1118,19 +1146,19 @@ void Penguin::followMode()
         if (st188Val_L >= 400 && st188Val_R >= 400)
         {
             servoAttach();
-            walk(1, t * 3, 1);
+            walk(1, 1, t * 3);
             servoDetach();
         }
         else if (st188Val_L >= 400 && st188Val_R < 400)
         {
             servoAttach();
-            turn(1, t * 4, -1);
+            turn(1, -1, t * 4);
             servoDetach();
         }
         else if (st188Val_L < 400 && st188Val_R >= 400)
         {
             servoAttach();
-            turn(1, t * 4, 1);
+            turn(1, 1, t * 4);
             servoDetach();
         }
         else if (st188Val_L < 400 && st188Val_R < 400)
@@ -1144,7 +1172,7 @@ void Penguin::followMode()
             else
             {
                 servoAttach();
-                walk(1, t * 3, 1);
+                walk(1, 1, t * 3);
                 servoDetach();
             }
         }

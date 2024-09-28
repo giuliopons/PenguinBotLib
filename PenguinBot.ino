@@ -82,7 +82,7 @@ bool progFlag = false;
 unsigned long preMp3Millis;
 
 // time unit
-int t = 495;            
+// int t = 495;            
 
 unsigned long preMp3MillisStop_OBSTACLE;
 unsigned long preMp3MillisStop_FOLLOW;
@@ -101,10 +101,12 @@ Penguin robot(mp3);
 */
 void prog() {
 
+  Serial.println("ciao");
+
   robot.servoAttach();
   robot.home();
   mp3.playSong(9, mp3.volume);
-  robot.walk(2, t * 3, 1);
+  robot.walk(10, 1);
   robot.home();
   robot.sitdown();
   robot.home();
@@ -136,7 +138,9 @@ void setup()
   robot.servoAttach();
   robot.homes(200);
   robot.servoDetach();
-  robot.startAnimation();
+  // robot.startAnimation();
+
+  prog();
 }
 
 
@@ -302,22 +306,22 @@ void loop()
       {
         case FORWARD:
           robot.servoAttach();
-          robot.walk(1, t * 3, 1);
+          robot.walk(1, 1);
           robot.servoDetach();
           break;
         case BACKWAED:
           robot.servoAttach();
-          robot.walk(1, t * 3, -1);
+          robot.walk(1, -1);
           robot.servoDetach();
           break;
         case TURNRIGHT:
           robot.servoAttach();
-          robot.turn(1, t * 4, 1);
+          robot.turn(1, 1);
           robot.servoDetach();
           break;
         case TURNLIFT:
           robot.servoAttach();
-          robot.turn(1, t * 4, -1);
+          robot.turn(1, -1);
           robot.servoDetach();
           break;
         default:
