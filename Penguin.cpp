@@ -1208,6 +1208,11 @@ void Penguin::st188Adjust(int dis)
     }
 }
 
+/* read voltage level for the battery */
+double Penguin::batteryLevel() {
+  return analogRead(VOLTAGE_MEASURE_PIN) * 4.97 / 1023;
+}
+
 /*
  Voltage detection implementation function:
 
@@ -1220,18 +1225,20 @@ void Penguin::Test_voltageMeasure(void) //Realization of Voltage Detection
     static boolean is_flag = true;
     if (millis() - voltageMeasureTime > 10000)
     {
-        double volMeasure = analogRead(VOLTAGE_MEASURE_PIN) * 4.97 / 1023;
+        double volMeasure = batteryLevel();
         //Serial.print("Battery voltage: ");
-        //Serial.println(volMeasure)
+        //Serial.println(volMeasure);
 
         //if (volMeasure < 3.70 || volMeasure >= 4.97)//Detection of power supply voltage below or above the set value is regarded as an abnormal phenomenon
-        if (volMeasure < 3.70 )//Detection of power supply voltage below or above the set value is regarded as an abnormal phenomenon
+        if (volMeasure >= 3.70 )//Detection of power supply voltage below or above the set value is regarded as an abnormal phenomenon
         {
-            voltageMeasure_flag = false;
+            // voltage is ok, no flash
+            voltageMeasure_flag = true;
         }
         else
         {
-            voltageMeasure_flag = true;
+            // need recharge, flash
+            voltageMeasure_flag = false;
         }
         voltageMeasureTime = millis();
     }
