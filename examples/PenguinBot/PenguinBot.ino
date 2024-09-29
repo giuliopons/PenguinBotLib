@@ -1,8 +1,4 @@
-#include "Arduino.h"
-#include "MsTimer2.h"
 #include "Penguin.h"
-#include "NeoSWSerial.h"
-#include "MY1690_16S.h"
 
 /* Serial Bluetooth Communication Control Command Data Frame*/
 
