@@ -1245,7 +1245,7 @@ void Penguin::Test_voltageMeasure(void) //Realization of Voltage Detection
 
     if (voltageMeasure_flag)
     {
-        digitalWrite(INDICATOR_LED_PIN, HIGH);
+        digitalWrite(INDICATOR_LED_PIN, LOW);
     }
     else
     {
