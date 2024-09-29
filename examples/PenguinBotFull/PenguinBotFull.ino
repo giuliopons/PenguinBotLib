@@ -437,8 +437,6 @@ void loop()
       }
       break;
 
-
-
     default:
       break;
   }
