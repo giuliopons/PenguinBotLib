@@ -45,6 +45,7 @@
 class Penguin {
   public:
     Penguin(MY1690_16S& mp3Instance);
+    Penguin();
 
     /* movement methods */
     bool walk(int steps, int dir, int T = -1);
@@ -65,7 +66,6 @@ class Penguin {
     bool flapping(int steps, int T = -1);
     bool run(int steps, int T = -1);
     bool backyard(int steps, int T = -1);
-    bool backyardSlow(int steps, int T = -1);
     bool goingUp(int T = -1);
     bool drunk(int T = -1);
     bool noGravity(int T =-1);
@@ -85,6 +85,7 @@ class Penguin {
     void dance3();
     void dance4();
 
+    /* serial command */
     void setSerialFlag(boolean flag);
     bool getSerialFlag();
     char getBluetoothValue();

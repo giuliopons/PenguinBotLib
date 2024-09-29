@@ -1,7 +1,6 @@
 #include "Penguin.h"
 
-//Penguin::Penguin() {
-Penguin::Penguin(MY1690_16S& mp3Instance) : mp3(mp3Instance) {
+Penguin::Penguin() {
     for (int i = 0; i < N_SERVOS; i++) {
       oldPosition[i] = CENTRE;
     }
@@ -11,6 +10,10 @@ Penguin::Penguin(MY1690_16S& mp3Instance) : mp3(mp3Instance) {
     pinMode(INDICATOR_LED_PIN, OUTPUT);
     pinMode(VOLTAGE_MEASURE_PIN, INPUT);
     analogWrite(INDICATOR_LED_PIN, HIGH);
+}
+Penguin::Penguin(MY1690_16S& mp3Instance) : mp3(mp3Instance) {
+
+    Penguin();
 
 }
     
