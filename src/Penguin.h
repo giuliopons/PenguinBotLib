@@ -102,6 +102,11 @@ class Penguin {
 
     /* sensor methods */
     int getDistance();
+
+    int irLeft();
+    int irRight();
+    
+
     double batteryLevel();
     
     void obstacleMode();

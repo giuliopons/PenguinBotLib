@@ -1044,6 +1044,19 @@ int Penguin::getDistance()
     return dist > 0 && dist < 250 ? dist : 250;
 }
 
+
+int Penguin::irLeft() {
+    st188Val_L = analogRead(ST188_L_PIN);
+    return st188Val_L;
+
+}
+
+int Penguin::irRight() {
+    st188Val_R = analogRead(ST188_R_PIN);
+    return st188Val_R;
+}
+
+
 /* Realization of Obstacle Avoidance Mode*/
 void Penguin::obstacleMode()
 {
@@ -1056,8 +1069,8 @@ void Penguin::obstacleMode()
    */
     if (distance_value >= 1 && distance_value <= 500)
     {
-        st188Val_L = analogRead(ST188_L_PIN);
-        st188Val_R = analogRead(ST188_R_PIN);
+        st188Val_L = irLeft();
+        st188Val_R = irRight();
         if (st188Val_L >= 400 && st188Val_R >= 400)
         {
             servoAttach();
@@ -1142,8 +1155,8 @@ void Penguin::followMode()
 */
     if (distance_value >= 1 && distance_value <= 500)
     {
-        st188Val_L = analogRead(ST188_L_PIN);
-        st188Val_R = analogRead(ST188_R_PIN);
+        st188Val_L = irLeft();
+        st188Val_R = irRight();
 
         /* 
         Serial.print(st188Val_L);
