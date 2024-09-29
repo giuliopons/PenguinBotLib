@@ -1039,7 +1039,9 @@ int Penguin::getDistance()
     digitalWrite(TRIG_PIN, HIGH);
     delayMicroseconds(10);
     digitalWrite(TRIG_PIN, LOW);
-    return (int)pulseIn(ECHO_PIN, HIGH) / 58;
+    // limit to 32760 to avoid negative values
+    int dist = (int)pulseIn(ECHO_PIN, HIGH, 32760) / 58;
+    return dist > 0 && dist < 250 ? dist : 250;
 }
 
 /* Realization of Obstacle Avoidance Mode*/
