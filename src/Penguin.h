@@ -124,7 +124,7 @@ class Penguin {
 
     MY1690_16S& mp3;
 
-    int t = 495;
+    int t = 495;                    // time unit
     double pause = 0;
     char btValue = '\0';            // it's "null", so if('\0') è false
     bool serial_flag = false;       // becomes "true" when there is serial communication
@@ -133,15 +133,19 @@ class Penguin {
     unsigned long interval_time;
     int oneTime;
     int iteration;
+    
     Oscillator servo[N_SERVOS];
     int oldPosition[N_SERVOS];
 
     double distance_value = 0;
-    int st188Val_L;
-    int st188Val_R;
+    
+    int st188Val_L;                 // left infra red
+    int st188Val_R;                 // right infra red
+
     long int ST188Threshold;
     long int ST188RightDataMin;
     long int ST188LeftDataMin;
+
     unsigned long infraredMeasureTime;
 
     unsigned long voltageMeasureTime;
