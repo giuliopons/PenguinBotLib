@@ -1,7 +1,3 @@
-#include <MY1690_16S.h>
-#include <MsTimer2.h>
-#include <NeoSWSerial.h>
-#include <Oscillator.h>
 #include <Penguin.h>
 
 Penguin robot;
