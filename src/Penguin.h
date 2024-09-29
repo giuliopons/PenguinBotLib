@@ -39,8 +39,10 @@
 
 #include <Arduino.h>
 #include "Oscillator.h"
-#include <EEPROM.h>
-#include "MY1690_16S.h"
+#include <EEPROM.h>         // for servo fine tunings values
+#include "MY1690_16S.h"     // mp3 chip lib
+#include "MsTimer2.h"       // used for bluetooth interaction
+
 
 class Penguin {
   public:
