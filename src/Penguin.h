@@ -55,7 +55,7 @@ class Penguin {
     void servoDetach();
     void servoInit();
     bool home();
-    void homes(int millis_t);
+    void homes(int T = -1);
     bool oscillate(int A[N_SERVOS], int O[N_SERVOS], int T, double phase_diff[N_SERVOS]);
     bool turn(int steps, int dir, int T = -1);
     bool moonWalkRight(int steps, int T = -1);

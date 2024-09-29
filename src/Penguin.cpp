@@ -309,13 +309,14 @@ bool Penguin::home()
 /*
     Setting the 90-degree position of the steering gear to make the penguin stand on its feet
 */
-void Penguin::homes(int millis_t)
+void Penguin::homes(int T = -1)
 {
+    if (T==-1) T = t;
     servo[0].SetPosition(90);
     servo[1].SetPosition(90);
     servo[2].SetPosition(90);
     servo[3].SetPosition(90);
-    delay(millis_t);
+    delay(T);
 }
 
 
