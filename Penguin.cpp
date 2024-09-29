@@ -10,10 +10,12 @@ Penguin::Penguin() {
     pinMode(INDICATOR_LED_PIN, OUTPUT);
     pinMode(VOLTAGE_MEASURE_PIN, INPUT);
     analogWrite(INDICATOR_LED_PIN, HIGH);
+
 }
 Penguin::Penguin(MY1690_16S& mp3Instance) : mp3(mp3Instance) {
-
+  
     Penguin();
+    useMp3 = true;
 
 }
     
@@ -767,7 +769,7 @@ bool Penguin::sitdown()
 
 bool Penguin::lateral_fuerte(boolean dir, int T=-1)
 {
-   if(T==-1) T= t;
+   if(T==-1) T= t / 2;
     if (dir)
     {
         int move1[] = {CENTRE - 2 * AMPLITUDE, CENTRE - AMPLITUDE, CENTRE, CENTRE};
@@ -1034,10 +1036,10 @@ void Penguin::dance4()
 void Penguin::startAnimation()
 {
     delay(10);
-    mp3.playSong(10, mp3.volume);
+    if( useMp3 ) mp3.playSong(10, mp3.volume);
     servoAttach();
-    lateral_fuerte(1, t);
-    lateral_fuerte(0, t);
+    lateral_fuerte(1, t / 2);
+    lateral_fuerte(0, t / 2);
     goingUp(t);
     servoDetach();
 }

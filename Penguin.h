@@ -116,6 +116,7 @@ class Penguin {
     int addr_trim_yl = 3;
 
     MY1690_16S& mp3;
+    bool useMp3 = false;
 
     int t = 495;
     double pause = 0;

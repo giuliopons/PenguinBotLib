@@ -136,8 +136,8 @@ void setup()
   robot.servoAttach();
   robot.homes(200);
   robot.servoDetach();
-  // robot.startAnimation();
-  prog();
+  robot.startAnimation();
+  //prog();
 }
 
 
