@@ -11,13 +11,14 @@
 #define HT6871_PIN 7
 
 class MY1690_16S {
+
 public:
     MY1690_16S(NeoSWSerial& serial);
 
-    byte volume;
+    
     String playStatus[5] = {"0", "1", "2", "3", "4"}; // STOP PLAYING PAUSE FF FR
 
-    void playSong(unsigned char num, unsigned char vol);
+    void playSong(unsigned char num);
     String getPlayStatus();
     String getStatus();
     void stopPlay();
@@ -26,9 +27,11 @@ public:
     void volumeDown();
     void setPlayMode(unsigned char mode);
     void ampMode(int p, bool m);
-    void init();
+    void init( unsigned char vol = 255);
 
 private:
+    byte volume = 15;
+    
     void checkCode(unsigned char* vs);
 
     NeoSWSerial& mp3Serial;

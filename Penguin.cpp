@@ -12,11 +12,11 @@ Penguin::Penguin() {
     analogWrite(INDICATOR_LED_PIN, HIGH);
 
 }
-Penguin::Penguin(MY1690_16S& mp3Instance) : mp3(mp3Instance) {
-  
-    Penguin();
-    useMp3 = true;
 
+Penguin::Penguin(MY1690_16S& mp3Instance) : mp3(mp3Instance) {  
+    Penguin();
+
+    /* why should I keep mp3 inside this class? */
 }
     
   
@@ -1030,20 +1030,6 @@ void Penguin::dance4()
 }
 
 
-//
-// STARTUP ANIMATION
-//
-void Penguin::startAnimation()
-{
-    delay(10);
-    if( useMp3 ) mp3.playSong(10, mp3.volume);
-    servoAttach();
-    lateral_fuerte(1, t / 2);
-    lateral_fuerte(0, t / 2);
-    goingUp(t);
-    servoDetach();
-}
-
 /* Realization of Ultrasound Ranging*/
 int Penguin::getDistance()
 {
@@ -1268,21 +1254,3 @@ void Penguin::Test_voltageMeasure(void) //Realization of Voltage Detection
         }
     }
 }
-    
-/*
-    void Penguin::playSong(unsigned char num, unsigned char vol) {
-      mp3.playSong(num,vol);
-    }
-    void Penguin::stopPlay() {
-      mp3.stopPlay();
-    }
-    void Penguin::volumePlus() {
-      mp3.volumePlus();
-    }
-    void Penguin::volumeDown() {
-      mp3.volumeDown();
-    }
-    String Penguin::getPlayStatus() {
-      return mp3.getPlayStatus();
-    }    
-    */

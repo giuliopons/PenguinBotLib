@@ -103,7 +103,7 @@ void prog() {
 
 robot.run(15);
   
-  // mp3.playSong(9, mp3.volume);
+  // mp3.playSong(9);
   //robot.walk(10, 1);
   //robot.home();
   //robot.sitdown();
@@ -127,6 +127,7 @@ void setup()
 
   mp3Serial.begin(9600);
   mp3.init();
+ 
   delay(1000);
 
   mp3.stopPlay();
@@ -135,8 +136,16 @@ void setup()
   robot.servoInit();
   robot.servoAttach();
   robot.homes(200);
+  
+
+  // start animation
+  mp3.playSong(10);
+  robot.lateral_fuerte(1);
+  robot.lateral_fuerte(0);
+  robot.goingUp();
   robot.servoDetach();
-  robot.startAnimation();
+
+  
   //prog();
 }
 
@@ -188,7 +197,7 @@ void loop()
         {
           musicIndex = 2;
         }
-        mp3.playSong(musicIndex, mp3.volume);
+        mp3.playSong(musicIndex);
         preMp3Millis = millis();
         break;
       case BTN_TRACK:
@@ -202,7 +211,7 @@ void loop()
         {
           trackIndex = 8;
         }
-        mp3.playSong(trackIndex, mp3.volume);
+        mp3.playSong(trackIndex);
         preMp3Millis = millis();
         break;
       case BTN_PROG:
@@ -217,38 +226,28 @@ void loop()
         {
           danceIndex = 2;
         }
-        mp3.playSong(danceIndex, mp3.volume);
+        mp3.playSong(danceIndex);
         break;
       case BTN_OBSTACLE:
         robot.delays(10);
         mp3.stopPlay();
         robot.delays(10);
-        mp3.playSong(7, mp3.volume);
+        mp3.playSong(7);
         mode = OBSTACLE;
         //preMp3MillisStop_OBSTACLE = 0;
         preMp3MillisStop_OBSTACLE = millis();
         break;
       case BTN_VOL_ADD:
         mp3.volumePlus();
-        mp3.volume += 1;
-        if (mp3.volume >= 30)
-        {
-          mp3.volume = 30;
-        }
         break;
       case BTN_VOL_SUB:
         mp3.volumeDown();
-        mp3.volume -= 1;
-        if (mp3.volume <= 0)
-        {
-          mp3.volume = 0;
-        }
         break;
       case BTN_FOLLOW:
         robot.delays(10);
         mp3.stopPlay();
         robot.delays(10);
-        mp3.playSong(6, mp3.volume);
+        mp3.playSong(6);
         mode = FOLLOW;
         preMp3MillisStop_FOLLOW = 0;
         preMp3MillisStop_FOLLOW = millis();
@@ -359,7 +358,7 @@ void loop()
           {
             musicIndex = 2;
           }
-          mp3.playSong(musicIndex, mp3.volume);
+          mp3.playSong(musicIndex);
         }
       }
       break;
@@ -375,7 +374,7 @@ void loop()
             {
               trackIndex = 8;
             }
-            mp3.playSong(trackIndex, mp3.volume);
+            mp3.playSong(trackIndex);
           }
         }
       }
@@ -387,7 +386,7 @@ void loop()
         robot.delays(10);
         mp3.stopPlay();
         robot.delays(10);
-        mp3.playSong(danceIndex, mp3.volume);
+        mp3.playSong(danceIndex);
         robot.servoAttach();
         switch (danceIndex)
         {

@@ -2,8 +2,7 @@
 
 MY1690_16S::MY1690_16S(NeoSWSerial& serial) : mp3Serial(serial), volume(15) {}
 
-void MY1690_16S::playSong(unsigned char num, unsigned char vol) {
-    setVolume(vol);
+void MY1690_16S::playSong(unsigned char num) {
     setPlayMode(4);
     CMD_SongSelet[4] = num;
     checkCode(CMD_SongSelet);
@@ -32,19 +31,28 @@ void MY1690_16S::stopPlay() {
 }
 
 void MY1690_16S::setVolume(unsigned char vol) {
-    CMD_VolumeSet[3] = vol;
-    checkCode(CMD_VolumeSet);
-    mp3Serial.write(CMD_VolumeSet, 6);
+    if( vol >=0 && vol <=30) {
+      volume = vol;
+      CMD_VolumeSet[3] = vol;
+      checkCode(CMD_VolumeSet);
+      mp3Serial.write(CMD_VolumeSet, 6);
+    }
     delay(50);
 }
 
 void MY1690_16S::volumePlus() {
-    mp3Serial.write(CMD_VolumePlus, 5);
+    if(volume < 30) {
+      volume += 1;
+      mp3Serial.write(CMD_VolumePlus, 5);
+    }
     delay(50);
 }
 
 void MY1690_16S::volumeDown() {
-    mp3Serial.write(CMD_VolumeDown, 5);
+    if( volume > 0 ) {
+        volume -= 1;
+        mp3Serial.write(CMD_VolumeDown, 5);
+    }
     delay(50);
 }
 
@@ -73,9 +81,8 @@ void MY1690_16S::ampMode(int p, bool m) {
     }
 }
 
-void MY1690_16S::init() {
-  Serial.println("ooo");
-    ampMode(HT6871_PIN, HIGH);
-    stopPlay();
-    volume = 15;
+void MY1690_16S::init( unsigned char vol = 255) {
+  ampMode(HT6871_PIN, HIGH);
+  stopPlay();
+  setVolume(vol == 255 ? volume : vol);
 }

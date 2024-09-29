@@ -85,18 +85,22 @@ class Penguin {
     void dance3();
     void dance4();
 
-    /* serial command */
+    /* bt serial command */
     void setSerialFlag(boolean flag);
     bool getSerialFlag();
     char getBluetoothValue();
     void setBluetoothValue(char v);
     void getCommand();
 
+    /* settings */
     void trimServo(char btn);
 
+    /* startup anim */
     void startAnimation();
 
+    /* sensor methods */
     int getDistance();
+    
     void obstacleMode();
     void followMode();
     void st188Adjust(int dis);
@@ -116,7 +120,6 @@ class Penguin {
     int addr_trim_yl = 3;
 
     MY1690_16S& mp3;
-    bool useMp3 = false;
 
     int t = 495;
     double pause = 0;
