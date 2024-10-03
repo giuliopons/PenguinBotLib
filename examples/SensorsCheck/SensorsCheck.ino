@@ -17,7 +17,7 @@ void loop()
   int irL = robot.irLeft();
   int irR = robot.irRight();
   int distance = robot.getDistance();
-  double bat = robot.batteryLevel();
+  double bat = robot.getBatteryLevel();
   
   Serial.print("IR LEFT: ");
   Serial.print(irL);
