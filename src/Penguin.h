@@ -38,16 +38,17 @@
 
 
 #include <Arduino.h>
-#include "Oscillator.h"
-#include <EEPROM.h>         // for servo fine tunings values
-#include "MY1690_16S.h"     // mp3 chip lib
-#include "MsTimer2.h"       // used for bluetooth interaction
+#include "Oscillator.h"     // for serovs movements
+#include <EEPROM.h>         // for servo fine tunings values stored in EEPROM
 
 
 class Penguin {
   public:
-    Penguin(MY1690_16S& mp3Instance);
+    // Penguin(MY1690_16S& mp3Instance);
     Penguin();
+
+    void setTimeUnit(int t);
+    int getTimeUnit();
 
     /* movement methods */
     bool walk(int steps, int dir, int T = -1);
@@ -56,6 +57,7 @@ class Penguin {
     void servoAttach();
     void servoDetach();
     void servoInit();
+    void resetTrim ();
     bool home();
     void homes(int T = -1);
     bool oscillate(int A[N_SERVOS], int O[N_SERVOS], int T, double phase_diff[N_SERVOS]);
@@ -80,12 +82,7 @@ class Penguin {
     bool legRaise4(int dir, int T = -1);
     bool sitdown();
     bool lateral_fuerte(boolean dir, int T=-1);
-    bool primera_parte();
-    bool segunda_parte();
-    void dance();
-    void dance2();
-    void dance3();
-    void dance4();
+
 
     /* bt serial command */
     void setSerialFlag(boolean flag);
@@ -102,18 +99,15 @@ class Penguin {
 
     /* sensor methods */
     int getDistance();
-
+    void setThresholdIr(int v);
+    int getThresholdIr();
     int irLeft();
     int irRight();
     
 
-    double batteryLevel();
-    
-    void obstacleMode();
-    void followMode();
-    void st188Adjust(int dis);
+    double getBatteryLevel();
     void Test_voltageMeasure(void);
-  
+    //void st188Adjust(int dis);
 
 
   private:
@@ -127,8 +121,6 @@ class Penguin {
     int addr_trim_yr = 2;
     int addr_trim_yl = 3;
 
-    MY1690_16S& mp3;
-
     int t = 495;                    // time unit
     double pause = 0;
     char btValue = '\0';            // it's "null", so if('\0') è false
@@ -136,8 +128,8 @@ class Penguin {
     float increment[N_SERVOS];
     unsigned long final_time;
     unsigned long interval_time;
-    int oneTime;
-    int iteration;
+    int oneTime;    
+    int iteration;  
     
     Oscillator servo[N_SERVOS];
     int oldPosition[N_SERVOS];
@@ -147,11 +139,12 @@ class Penguin {
     int st188Val_L;                 // left infra red
     int st188Val_R;                 // right infra red
 
-    long int ST188Threshold;
-    long int ST188RightDataMin;
-    long int ST188LeftDataMin;
+    int THRESHOLD_IR = 400;
 
-    unsigned long infraredMeasureTime;
+    //long int ST188Threshold;
+    //long int ST188RightDataMin;
+    //long int ST188LeftDataMin;
+    //unsigned long infraredMeasureTime;
 
     unsigned long voltageMeasureTime;
 

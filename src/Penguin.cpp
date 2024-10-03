@@ -13,15 +13,14 @@ Penguin::Penguin() {
 
 }
 
-Penguin::Penguin(MY1690_16S& mp3Instance) : mp3(mp3Instance) {  
-    Penguin();
-
-    /* why should I keep mp3 inside this class? */
-}
+/* why should I keep mp3 inside this class? */
+// Penguin::Penguin(MY1690_16S& mp3Instance) : mp3(mp3Instance) {  
+//     Penguin();  
+// }
     
   
 
-
+/* a delay that could be interrupted by bluetooth control */
 bool Penguin::delays(unsigned long ms)
 {
     for (unsigned long i = 0; i < ms; i++)
@@ -44,19 +43,19 @@ void Penguin::setSerialFlag(boolean flag) {
   serial_flag = flag;
 }
 
+/**
+ * get serial flag value stored
+ */
+bool Penguin::getSerialFlag() {
+  return serial_flag;
+}
+
 void Penguin::setBluetoothValue(char v) {
   btValue = v;
 }
 
 char Penguin::getBluetoothValue() {
   return btValue;
-}
-
-/**
- * get serial flag value stored
- */
-bool Penguin::getSerialFlag() {
-  return serial_flag;
 }
 
 /* Control command acquisition implementation*/
@@ -103,9 +102,21 @@ void Penguin::servoDetach()
     servo[3].detach();
 }
 
+void Penguin::resetTrim () {
+    EEPROM.write(addr_trim_rr, 255);
+    EEPROM.write(addr_trim_rl, 255);
+    EEPROM.write(addr_trim_yr, 255);
+    EEPROM.write(addr_trim_yl, 255);
+}
 
 void Penguin::servoInit()
 {
+    // Serial.println("addr_trim_rr : " + (String)EEPROM.read(addr_trim_rr));
+    // Serial.println("addr_trim_rl : " + (String)EEPROM.read(addr_trim_rl));
+    // Serial.println("addr_trim_yr : " + (String)EEPROM.read(addr_trim_yr));
+    // Serial.println("addr_trim_yl : " + (String)EEPROM.read(addr_trim_yl));
+
+
     if (EEPROM.read(addr_trim_rr) != 255)
     {
         trim_rr = EEPROM.read(addr_trim_rr) - 90; 
@@ -143,14 +154,69 @@ void Penguin::servoInit()
     }
 }
 
+/* trim servo */
+void Penguin::trimServo(char btn) {
+
+  if(btn == BTN_RR_ADD) {
+    trim_rr++;
+    trim_rr = constrain(trim_rr, -90, 90);
+    EEPROM.write(addr_trim_rr, trim_rr + 90);
+  }
+
+  if(btn == BTN_RL_ADD) {
+    trim_rl++;
+    trim_rl = constrain(trim_rl, -90, 90);
+    EEPROM.write(addr_trim_rl, trim_rl + 90);
+  }
+
+  if(btn==BTN_YR_ADD){
+      trim_yr++;
+      trim_yr = constrain(trim_yr, -90, 90);
+      EEPROM.write(addr_trim_yr, trim_yr + 90);
+  }
+   if(btn==BTN_YL_ADD) {
+      trim_yl++;
+      trim_yl = constrain(trim_yl, -90, 90);
+      EEPROM.write(addr_trim_yl, trim_yl + 90);
+   }
+   if(btn==BTN_RR_SUB){
+    trim_rr--;
+    trim_rr = constrain(trim_rr, -90, 90);
+    EEPROM.write(addr_trim_rr, trim_rr + 90);
+   }
+   if(btn==BTN_RL_SUB) {
+      trim_rl--;
+      trim_rl = constrain(trim_rl, -90, 90);
+      EEPROM.write(addr_trim_rl, trim_rl + 90);
+   }
+   if(btn==BTN_YR_SUB){
+      trim_yr--;
+      trim_yr = constrain(trim_yr, -90, 90);
+      EEPROM.write(addr_trim_yr, trim_yr + 90);
+   }
+   if(btn==BTN_YL_SUB) {
+      trim_yl--;
+      trim_yl = constrain(trim_yl, -90, 90);
+      EEPROM.write(addr_trim_yl, trim_yl + 90);
+    }
+    servoAttach();
+    homes(100);
+    servoDetach();
+}
+
+void Penguin::setTimeUnit(int t) {
+    Penguin::t = t;
+}
+int Penguin::getTimeUnit() {
+    return Penguin::t;
+}
 
 /*
  Walking control realization:
 */
 bool Penguin::walk(int steps, int dir, int T = -1)
 {
-    Serial.println("test");
-  
+    
     if (T == -1) T = t * 3;
 
     int move1[] = {90, 90 + 35, 90 + 15, 90 + 15};
@@ -206,6 +272,9 @@ bool Penguin::walk(int steps, int dir, int T = -1)
     return false;
 }
 
+/*
+servos movement
+*/
 bool Penguin::moveNServos(int time, int newPosition[])
 {
     for (int i = 0; i < N_SERVOS; i++)
@@ -797,55 +866,6 @@ bool Penguin::lateral_fuerte(boolean dir, int T=-1)
 }
 
 
-/* trim servo */
-void Penguin::trimServo(char btn) {
-
-  if(btn == BTN_RR_ADD) {
-    trim_rr++;
-    trim_rr = constrain(trim_rr, -90, 90);
-    EEPROM.write(addr_trim_rr, trim_rr + 90);
-  }
-
-  if(btn == BTN_RL_ADD) {
-    trim_rl++;
-    trim_rl = constrain(trim_rl, -90, 90);
-    EEPROM.write(addr_trim_rl, trim_rl + 90);
-  }
-
-  if(btn==BTN_YR_ADD){
-      trim_yr++;
-      trim_yr = constrain(trim_yr, -90, 90);
-      EEPROM.write(addr_trim_yr, trim_yr + 90);
-  }
-   if(btn==BTN_YL_ADD) {
-      trim_yl++;
-      trim_yl = constrain(trim_yl, -90, 90);
-      EEPROM.write(addr_trim_yl, trim_yl + 90);
-   }
-   if(btn==BTN_RR_SUB){
-    trim_rr--;
-    trim_rr = constrain(trim_rr, -90, 90);
-    EEPROM.write(addr_trim_rr, trim_rr + 90);
-   }
-   if(btn==BTN_RL_SUB) {
-      trim_rl--;
-      trim_rl = constrain(trim_rl, -90, 90);
-      EEPROM.write(addr_trim_rl, trim_rl + 90);
-   }
-   if(btn==BTN_YR_SUB){
-      trim_yr--;
-      trim_yr = constrain(trim_yr, -90, 90);
-      EEPROM.write(addr_trim_yr, trim_yr + 90);
-   }
-   if(btn==BTN_YL_SUB) {
-      trim_yl--;
-      trim_yl = constrain(trim_yl, -90, 90);
-      EEPROM.write(addr_trim_yl, trim_yl + 90);
-    }
-    servoAttach();
-    homes(100);
-    servoDetach();
-}
 
 
 
@@ -857,178 +877,6 @@ void Penguin::trimServo(char btn) {
 
 
 
-
-bool Penguin::primera_parte()
-{
-    int move2[4] = {90, 90, 90, 90};
-    if (lateral_fuerte(1, t) ||
-        moveNServos(t * 0.5, move2) ||
-        lateral_fuerte(0, t) ||
-        moveNServos(t * 0.5, move2) ||
-        lateral_fuerte(1, t) ||
-        moveNServos(t * 0.5, move2) ||
-        lateral_fuerte(0, t) ||
-        home())
-        return true;
-    return false;
-}
-
-bool Penguin::segunda_parte()
-{
-    double pause = 0;
-  
-    int move1[4] = {90, 90, 80, 100};
-    int move2[4] = {90, 90, 100, 80};
-    for (int x = 0; x < 3; x++)
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            pause = millis();
-            if (moveNServos(t * 0.15, move1) ||
-                moveNServos(t * 0.15, move2))
-                return true;
-            while (millis() < (pause + t))
-            {
-                //if (irValue)
-                  //  return true;
-                if (serial_flag)
-                  {
-                      return true;
-                  }
-            }
-        }
-    }
-    if (home())
-        return true;
-    return false;
-}
-
-
-
-
-/*Dance action part*/
-
-void Penguin::dance()
-{
-    primera_parte();
-    segunda_parte();
-    moonWalkLeft(4);
-    moonWalkRight(4);
-    moonWalkLeft(4);
-    moonWalkRight(4);
-    primera_parte();
-
-    for (int i = 0; i < 16; i++)
-    {
-        flapping(1, t / 4);
-        delays(3 * t / 4);
-    }
-
-    moonWalkRight(4);
-    moonWalkLeft(4);
-    moonWalkRight(4);
-    moonWalkLeft(4);
-
-    drunk(t * 4);
-    drunk(t * 4);
-    drunk(t * 4);
-    drunk(t * 4);
-    kickLeft(t);
-    kickRight(t);
-    drunk(t * 8);
-    drunk(t * 4);
-    drunk(t / 2);
-    delays(t * 4);
-
-    drunk(t / 2);
-
-    delays(t * 4);
-    walk(2, 1, t * 3);
-    home();
-    backyard(2, t * 2);
-    home();
-    goingUp(t * 2);
-    goingUp(t * 1);
-    noGravity(t);
-
-    delays(t);
-    primera_parte();
-    for (int i = 0; i < 32; i++)
-    {
-        flapping(1, t / 2);
-        delays(t / 2);
-    }
-
-    for (int i = 0; i < 4; i++)
-        servo[i].SetPosition(90);
-}
-
-void Penguin::dance2()
-{
-    if (lateral_fuerte(1, t) ||
-        lateral_fuerte(0, t) ||
-        drunk(t / 2) ||
-        drunk(t) ||
-        kickLeft(t) ||
-        kickRight(t) ||
-        walk(2, 1, t * 3) ||
-        home() ||
-        backyard(2, t * 4) ||
-        noGravity(t) ||
-        lateral_fuerte(1, t) ||
-        lateral_fuerte(0, t) ||
-        segunda_parte() ||
-        upDown(5, 500))
-        return;
-}
-
-void Penguin::dance3()
-{
-    if (sitdown() ||
-        legRaise(1, t) ||
-        swing(5, t) ||
-        legRaise1(1,t) ||
-        walk(2, 1, t * 3) ||
-        home() ||
-        noGravity(t) ||
-        kickRight(t) ||
-        goingUp(t) ||
-        kickLeft(t) ||
-        legRaise4(1, t) ||
-        backyard(2, t * 4) ||
-        drunk(t) ||
-        lateral_fuerte(1, 500) ||
-        lateral_fuerte(0, 500) ||
-        sitdown())
-        return;
-}
-
-void Penguin::dance4()
-{
-    if (flapping(1, t) ||
-        drunk(t) ||
-        kickLeft(t) ||
-        walk(2, 1, t * 3) ||
-        home() ||
-        lateral_fuerte(0, t) ||
-        sitdown() ||
-        legRaise(1, t) ||
-        swing(5, t) ||
-        backyard(2, t * 4) ||
-        goingUp(t) ||
-        noGravity(t) ||
-        upDown(5, t) ||
-        legRaise1(1, t) ||
-        legRaise2(4, 0, t) ||
-        kickRight(t) ||
-        goingUp(t) ||
-        legRaise3(4, 1,t) ||
-        kickLeft(t) ||
-        legRaise4( 1, t) ||
-        segunda_parte() ||
-        sitdown())
-        return;
-}
 
 
 /* Realization of Ultrasound Ranging*/
@@ -1056,156 +904,19 @@ int Penguin::irRight() {
     return st188Val_R;
 }
 
-
-/* Realization of Obstacle Avoidance Mode*/
-void Penguin::obstacleMode()
-{
-    bool turnFlag = true;
-    servoDetach();
-    //delay(500);
-    distance_value = getDistance();
-    /*  Serial.print("distance_obs: ");
-    Serial.println(distance_value);
-   */
-    if (distance_value >= 1 && distance_value <= 500)
-    {
-        st188Val_L = irLeft();
-        st188Val_R = irRight();
-        if (st188Val_L >= 400 && st188Val_R >= 400)
-        {
-            servoAttach();
-            walk(3, -1, t * 4);
-            if (turnFlag)
-            {
-                turn(3, 1, t * 4);
-            }
-            else
-            {
-                turn(3, -1, t * 4);
-            }
-            servoDetach();
-        }
-        else if (st188Val_L >= 400 && st188Val_R < 400)
-        {
-            turnFlag = true;
-            servoAttach();
-            turn(3, 1, t * 4);
-            servoDetach();
-        }
-        else if (st188Val_L < 400 && st188Val_R >= 400)
-        {
-            turnFlag = false;
-            servoAttach();
-            turn(3, -1, t * 4);
-            servoDetach();
-        }
-        else if (st188Val_L < 400 && st188Val_R < 400)
-        {
-            if (distance_value < 5)
-            {
-                servoAttach();
-                walk(3, -1, t * 3);
-                if (turnFlag)
-                {
-                    turn(3, 1, t * 4);
-                }
-                else
-                {
-                    turn(3, -1, t * 4);
-                }
-                servoDetach();
-            }
-            else if (distance_value >= 5 && distance_value <= 20)
-            {
-                servoAttach();
-                if (turnFlag)
-                {
-                    turn(1, 1, t * 4);
-                }
-                else
-                {
-                    turn(1, -1, t * 4);
-                }
-                servoDetach();
-            }
-            else
-            {
-                servoAttach();
-                walk(1, 1, t * 3);
-                servoDetach();
-            }
-        }
-    }
-    else
-    {
-        servoAttach();//
-        home();
-        servoDetach();
-    }
+void Penguin::setThresholdIr(int v) {
+    Penguin::THRESHOLD_IR = v;
 }
 
-/* Follow-up mode implementation*/
-void Penguin::followMode()
-{
-    servoDetach();
-    //delay(500);
-    distance_value = getDistance();
-    /*  Serial.print("distance_follow:");
-    Serial.println(distance_value);
+int Penguin::getThresholdIr() {
+    return Penguin::THRESHOLD_IR;
+}
+
+
+/*
+read ir data and perform mean... never used?
 */
-    if (distance_value >= 1 && distance_value <= 500)
-    {
-        st188Val_L = irLeft();
-        st188Val_R = irRight();
-
-        /* 
-        Serial.print(st188Val_L);
-        Serial.print('\t');
-        Serial.print(st188Val_R);
-        Serial.println();
-       */
-        if (st188Val_L >= 400 && st188Val_R >= 400)
-        {
-            servoAttach();
-            walk(1, 1, t * 3);
-            servoDetach();
-        }
-        else if (st188Val_L >= 400 && st188Val_R < 400)
-        {
-            servoAttach();
-            turn(1, -1, t * 4);
-            servoDetach();
-        }
-        else if (st188Val_L < 400 && st188Val_R >= 400)
-        {
-            servoAttach();
-            turn(1, 1, t * 4);
-            servoDetach();
-        }
-        else if (st188Val_L < 400 && st188Val_R < 400)
-        {
-            if (distance_value > 20)
-            {
-                servoAttach();
-                home();
-                servoDetach();
-            }
-            else
-            {
-                servoAttach();
-                walk(1, 1, t * 3);
-                servoDetach();
-            }
-        }
-    }
-    else
-    {
-        servoAttach();
-        home();
-        servoDetach();
-    }
-}
-
+/*
 void Penguin::st188Adjust(int dis)
 {
     if (millis() - infraredMeasureTime > 1000 && dis > 20 && dis < 200 && analogRead(ST188_L_PIN) < 300 && analogRead(ST188_R_PIN) < 300)
@@ -1223,9 +934,10 @@ void Penguin::st188Adjust(int dis)
         infraredMeasureTime = millis();
     }
 }
+*/
 
 /* read voltage level for the battery */
-double Penguin::batteryLevel() {
+double Penguin::getBatteryLevel() {
   return analogRead(VOLTAGE_MEASURE_PIN) * 4.97 / 1023;
 }
 
@@ -1241,7 +953,7 @@ void Penguin::Test_voltageMeasure(void) //Realization of Voltage Detection
     static boolean is_flag = true;
     if (millis() - voltageMeasureTime > 10000)
     {
-        double volMeasure = batteryLevel();
+        double volMeasure = getBatteryLevel();
         //Serial.print("Battery voltage: ");
         //Serial.println(volMeasure);
 
