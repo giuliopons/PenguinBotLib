@@ -5,6 +5,10 @@ Penguin robot;
 void setup()
 {
   Serial.begin(9600);  
+  double bat = robot.getBatteryLevel();
+  Serial.print("Battery level is ");
+  Serial.println(bat);
+  
   robot.servoInit();
   robot.servoAttach();
   robot.homes(200);
@@ -12,10 +16,7 @@ void setup()
 
   randomSeed( analogRead(0) );
 
-  double bat = robot.batteryLevel();
-  Serial.print("Battery level is ");
-  Serial.println(bat);
-  
+
 }
 
 void loop()
