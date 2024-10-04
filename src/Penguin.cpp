@@ -81,6 +81,9 @@ void Penguin::getCommand()
      Test_voltageMeasure();// Realization of Voltage Detection
 }
 
+/**
+ * Servo initialization attachment
+ */
 void Penguin::servoAttach()
 {
     //
@@ -95,6 +98,9 @@ void Penguin::servoAttach()
     servo[3].attach(YL_PIN);
 }
 
+/**
+ * Servo detachment
+ */
 void Penguin::servoDetach()
 {
     servo[0].detach();
@@ -103,6 +109,9 @@ void Penguin::servoDetach()
     servo[3].detach();
 }
 
+/**
+ * Servo trim reset write 255 to EEPROM data
+ */
 void Penguin::resetTrim () {
     EEPROM.write(addr_trim_rr, 255);
     EEPROM.write(addr_trim_rl, 255);
@@ -110,14 +119,13 @@ void Penguin::resetTrim () {
     EEPROM.write(addr_trim_yl, 255);
 }
 
+/**
+ * Servo initialization, use values in EEPROM to update trim values
+ * trim_rr, trim_rl, trim_yr, trim_yl are used in servoAttach
+ */
 void Penguin::servoInit()
 {
-    // Serial.println("addr_trim_rr : " + (String)EEPROM.read(addr_trim_rr));
-    // Serial.println("addr_trim_rl : " + (String)EEPROM.read(addr_trim_rl));
-    // Serial.println("addr_trim_yr : " + (String)EEPROM.read(addr_trim_yr));
-    // Serial.println("addr_trim_yl : " + (String)EEPROM.read(addr_trim_yl));
-
-
+    
     if (EEPROM.read(addr_trim_rr) != 255)
     {
         trim_rr = EEPROM.read(addr_trim_rr) - 90; 
@@ -155,7 +163,9 @@ void Penguin::servoInit()
     }
 }
 
-/* trim servo */
+/**
+ * Update trim servo from button pressed in the application 
+ */
 void Penguin::trimServo(char btn) {
 
   if(btn == BTN_RR_ADD) {
@@ -205,9 +215,16 @@ void Penguin::trimServo(char btn) {
     servoDetach();
 }
 
+/**
+ * Set time unit
+ */
 void Penguin::setTimeUnit(int t) {
     Penguin::t = t;
 }
+
+/**
+ * Get time unit
+ */
 int Penguin::getTimeUnit() {
     return Penguin::t;
 }
@@ -273,9 +290,9 @@ bool Penguin::walk(int steps, int dir, int T = -1)
     return false;
 }
 
-/*
-servos movement
-*/
+/**
+ * moveNServos in a sequence of positions
+ */
 bool Penguin::moveNServos(int time, int newPosition[])
 {
     for (int i = 0; i < N_SERVOS; i++)
@@ -311,7 +328,9 @@ bool Penguin::moveNServos(int time, int newPosition[])
     return false;
 }
 
-
+/**
+ * use the oscillate library to move servos
+ */
 bool Penguin::oscillate(int A[N_SERVOS], int O[N_SERVOS], int T, double phase_diff[N_SERVOS])
 {
     for (int i = 0; i < 4; i++)
@@ -369,6 +388,12 @@ bool Penguin::oscillate(int A[N_SERVOS], int O[N_SERVOS], int T, double phase_di
  * interruption happens with serial_flag true. It's triggered by a timer (MsTimer2) that is called very often
  * 
  */
+
+
+/**
+ * setting the 90-degree position of the steering gear to make the penguin stand on its feet
+ * (there are two ways of doing this)
+ */
 bool Penguin::home()
 {
     int move1[] = {90, 90, 90, 90};
@@ -378,6 +403,7 @@ bool Penguin::home()
 
 /*
     Setting the 90-degree position of the steering gear to make the penguin stand on its feet
+    (there are two ways of doing this)
 */
 void Penguin::homes(int T = -1)
 {
@@ -391,6 +417,9 @@ void Penguin::homes(int T = -1)
 
 
 
+/**
+ * Turn right and left 
+ */
 bool Penguin::turn(int steps, int dir, int T = -1)
 {
     if (T==-1) T = t * 4;
@@ -460,7 +489,10 @@ bool Penguin::turn(int steps, int dir, int T = -1)
 
     return false;
 }
-/* Turn right*/
+
+/**
+ * Moonwalk to the right
+ */
 bool Penguin::moonWalkRight(int steps, int T = -1)
 {
     if(T==-1) T = t*2;
@@ -473,7 +505,10 @@ bool Penguin::moonWalkRight(int steps, int T = -1)
             return true;
     return false;
 }
-/* Turn left*/
+
+/**
+ * Moonwalk to the left
+ */
 bool Penguin::moonWalkLeft(int steps, int T = -1)
 {
     if(T==-1) T = t*2;
@@ -487,7 +522,9 @@ bool Penguin::moonWalkLeft(int steps, int T = -1)
     return false;
 }
 
-/* crusaito */
+/**
+ * crusaito
+ */
 bool Penguin::crusaito(int steps, int T = -1)
 {
     if (T==-1) T = t * 2; // 2 decided by me, need to be tested
@@ -501,6 +538,10 @@ bool Penguin::crusaito(int steps, int T = -1)
         return true;
     return false;
 }
+
+/**
+ * swing movement
+ */
 bool Penguin::swing(int steps, int T = -1)
 {
     if (T==-1) T = t;
@@ -514,6 +555,9 @@ bool Penguin::swing(int steps, int T = -1)
     return false;
 }
 
+/**
+ * up and down movement
+ */
 bool Penguin::upDown(int steps, int T = -1)
 {
     if (T==-1) T = t;
@@ -528,6 +572,9 @@ bool Penguin::upDown(int steps, int T = -1)
     return false;
 }
 
+/**
+ * flapping movement
+ */
 bool Penguin::flapping(int steps, int T = -1)
 {
     if (T==-1) T = t;
@@ -541,7 +588,9 @@ bool Penguin::flapping(int steps, int T = -1)
     return false;
 }
 
-/* run */
+/*
+* run movement
+*/
 bool Penguin::run(int steps, int T = -1)
 {
     if (T==-1) T = t;  // t decided by me need to be tested
@@ -555,6 +604,9 @@ bool Penguin::run(int steps, int T = -1)
     return false;
 }
 
+/**
+ * backyard movement
+ */
 bool Penguin::backyard(int steps, int T = -1)
 {
     if (T==-1) T = t * 4;
@@ -568,6 +620,9 @@ bool Penguin::backyard(int steps, int T = -1)
     return false;
 }
 
+/**
+ * going up movement
+ */
 bool Penguin::goingUp(int T = -1)
 {
     if (T==-1) T = t;
@@ -579,6 +634,9 @@ bool Penguin::goingUp(int T = -1)
     return false;
 }
 
+/**
+ * going down movement
+ */
 bool Penguin::drunk(int T = -1)
 {
     if (T==-1) T = t;
@@ -595,6 +653,9 @@ bool Penguin::drunk(int T = -1)
     return false;
 }
 
+/**
+ * no gravity movement
+ */
 bool Penguin::noGravity(int T)
 {
     if (T==-1) T = t;
@@ -620,6 +681,9 @@ bool Penguin::noGravity(int T)
     return false;
 }
 
+/**
+ * kick left movement
+ */
 bool Penguin::kickLeft(int T = -1)
 {
    if(T==-1) T=t;
@@ -643,6 +707,9 @@ bool Penguin::kickLeft(int T = -1)
     return false;
 }
 
+/**
+ * kick right movement
+ */
 bool Penguin::kickRight(int T=-1)
 {
     if(T==-1) T=t;
@@ -666,6 +733,9 @@ bool Penguin::kickRight(int T=-1)
     return false;
 }
 
+/**
+ * leg raise
+ */
 bool Penguin::legRaise(int dir, int T=-1)
 {
     if(T==-1) T = t;
@@ -686,6 +756,9 @@ bool Penguin::legRaise(int dir, int T=-1)
     return false;
 }
 
+/**
+ * leg raise variation 1
+ */
 bool Penguin::legRaise1(int T, int dir)
 {
     if(T==-1) T = t;
@@ -728,6 +801,9 @@ bool Penguin::legRaise1(int T, int dir)
     return false;
 }
 
+/**
+ * leg raise variation 2
+ */
 bool Penguin::legRaise2(int steps, int dir, int T=-1)
 {
     if(T==-1) T = t;
@@ -762,6 +838,9 @@ bool Penguin::legRaise2(int steps, int dir, int T=-1)
     return false;
 }
 
+/**
+ * leg raise variation 3
+ */
 bool Penguin::legRaise3(int steps, int dir, int T=-1)
 {
     if(T==-1) T = t;
@@ -796,6 +875,9 @@ bool Penguin::legRaise3(int steps, int dir, int T=-1)
     return false;
 }
 
+/**
+ * leg raise variation 4
+ */
 bool Penguin::legRaise4(int dir, int T = -1)
 {
     if(T==-1) T = t;
@@ -825,6 +907,9 @@ bool Penguin::legRaise4(int dir, int T = -1)
     return false;
 }
 
+/**
+ * sit down movement
+ */
 bool Penguin::sitdown()
 {
     int move1[] = {150, 90, 90, 90};
@@ -838,6 +923,9 @@ bool Penguin::sitdown()
     return false;
 }
 
+/**
+ * lateral fuerte movement
+ */
 bool Penguin::lateral_fuerte(boolean dir, int T=-1)
 {
    if(T==-1) T= t / 2;
@@ -880,7 +968,9 @@ bool Penguin::lateral_fuerte(boolean dir, int T=-1)
 
 
 
-/* Realization of Ultrasound Ranging*/
+/**
+ * get distance with ultrasounds
+ */
 int Penguin::getDistance()
 {
     digitalWrite(TRIG_PIN, LOW);
@@ -893,22 +983,33 @@ int Penguin::getDistance()
     return dist > 0 && dist < 250 ? dist : 250;
 }
 
-
+/**
+ * get infra red left
+ */
 int Penguin::irLeft() {
     st188Val_L = analogRead(ST188_L_PIN);
     return st188Val_L;
 
 }
 
+/**
+ * get infra red right
+ */
 int Penguin::irRight() {
     st188Val_R = analogRead(ST188_R_PIN);
     return st188Val_R;
 }
 
+/** 
+ * set infra red threshold
+ */
 void Penguin::setThresholdIr(int v) {
     Penguin::THRESHOLD_IR = v;
 }
 
+/**
+ * get infra red threshold
+ */
 int Penguin::getThresholdIr() {
     return Penguin::THRESHOLD_IR;
 }
@@ -937,16 +1038,17 @@ void Penguin::st188Adjust(int dis)
 }
 */
 
-/* read voltage level for the battery */
+/**
+ * read voltage level for the battery
+ */
 double Penguin::getBatteryLevel() {
   return analogRead(VOLTAGE_MEASURE_PIN) * 4.97 / 1023;
 }
 
-/*
- Voltage detection implementation function:
-
-Acquisition of battery voltage, preset abnormal voltage threshold, control LED flashing to remind users of charging
-*/
+/**
+ * Voltage detection implementation function:
+ * Acquisition of battery voltage, preset abnormal voltage threshold, control LED flashing to remind users of charging
+ */
 void Penguin::Test_voltageMeasure(void) //Realization of Voltage Detection
 {
    
