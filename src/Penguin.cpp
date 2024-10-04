@@ -216,7 +216,7 @@ void Penguin::trimServo(char btn) {
 }
 
 /**
- * Set time unit
+ * Set time unit, 200 fast! 1000 slow. 495 default
  */
 void Penguin::setTimeUnit(int t) {
     Penguin::t = t;
@@ -392,7 +392,7 @@ bool Penguin::oscillate(int A[N_SERVOS], int O[N_SERVOS], int T, double phase_di
 
 /**
  * setting the 90-degree position of the steering gear to make the penguin stand on its feet
- * (there are two ways of doing this)
+ * (there are two ways of doing this, both use oscillator)
  */
 bool Penguin::home()
 {
@@ -403,7 +403,7 @@ bool Penguin::home()
 
 /*
     Setting the 90-degree position of the steering gear to make the penguin stand on its feet
-    (there are two ways of doing this)
+    (there are two ways of doing this, both use oscillator)
 */
 void Penguin::homes(int T = -1)
 {
