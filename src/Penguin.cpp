@@ -1,6 +1,10 @@
 #include "Penguin.h"
 
+/** 
+ * Constructor
+ */
 Penguin::Penguin() {
+
     for (int i = 0; i < N_SERVOS; i++) {
       oldPosition[i] = CENTRE;
     }
@@ -13,14 +17,11 @@ Penguin::Penguin() {
 
 }
 
-/* why should I keep mp3 inside this class? */
-// Penguin::Penguin(MY1690_16S& mp3Instance) : mp3(mp3Instance) {  
-//     Penguin();  
-// }
-    
-  
+ 
 
-/* a delay that could be interrupted by bluetooth control */
+/**
+ * a delay that could be interrupted by bluetooth control
+ */
 bool Penguin::delays(unsigned long ms)
 {
     for (unsigned long i = 0; i < ms; i++)
