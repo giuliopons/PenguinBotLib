@@ -24,16 +24,17 @@ Some of the things I've changed:
 
 Library files:
 
-* Penguin (.h, .cpp) : main library to access the basic movements of the robot and the sensors
-* Oscillator (.j, .cpp) : Juan Gonzalez-Gomez oscillator library to move servos in sync
-* MY1690_16S (.h, .cpp) : library to use the mp3/audio functions throught software serial communication
-* NeoSWSerial (.h, .cpp) : library to perform software serial communication via specific pins, used for audio
-* MsTimer2 (.h, .cpp) : library to handle a timer function to monitor Serial communication between BT and robot throught pins 0,1
+* `Penguin` (.h, .cpp) : main library to access the basic movements of the robot and the sensors
+* `Oscillator` (.j, .cpp) : Juan Gonzalez-Gomez oscillator library to move servos in sync
+* `MY1690_16S` (.h, .cpp) : library to use the mp3/audio functions throught software serial communication
+* `NeoSWSerial` (.h, .cpp) : library to perform software serial communication via specific pins, used for audio
+* `MsTimer2` (.h, .cpp) : library to handle a timer function to monitor Serial communication between BT and robot throught pins 0,1
 
 Examples:
 
-* SensorsCheck : show alues of sensors
-* Followmode.ino : follow a near target
-* ObstacleMode.ino : avoid an obstacle
-* Walkround.ino : walk around if there are no obstacles
-* PenguinBot : refactor of the original code with all functionalities
+* `SensorsCheck` : show alues of sensors
+* `Followmode`.ino : follow a near target
+* `ObstacleMode`.ino : avoid an obstacle
+* `Walkround`.ino : walk around if there are no obstacles
+* `PenguinBot` : refactor of the original code with all functionalities
+* `WithoutLibs` : an example of accessing servos and sensors without using libs
