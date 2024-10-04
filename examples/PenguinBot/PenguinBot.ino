@@ -136,8 +136,6 @@ void setup()
   mp3.stopPlay();
   delay(10);
 
-  robot.resetTrim();
-
   robot.servoInit();
   robot.servoAttach();
   robot.homes(200);
