@@ -39,6 +39,8 @@ void loop()
   } else {
     direction = "right";
   }
+
+  steps = random(1,3);
   Serial.print("Turn " + direction + " for steps ");
   Serial.println(steps);
     
