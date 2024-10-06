@@ -2,14 +2,11 @@
 
 Penguin robot;
 
-int THRESHOLD_IR = 400;
-
-
 void setup()
 {
   Serial.begin(9600);
 
-  //EEPROM.write(0, 255);
+  delay(1000);
 
   robot.servoInit();
   robot.servoAttach();
@@ -17,96 +14,95 @@ void setup()
   robot.servoDetach();
   delay(5000);
   robot.servoAttach();
+  robot.setTimeUnit(490);       // robot speed
+  randomSeed(analogRead(A0));   // randomize
   
 
 }
 
+int threshold_ir = 200;
+int distance = 250;
+int ir_L;
+int ir_R;
+bool flag;  // true on obstacle near, seen with ir
+       
+void obstacleMode2() {
 
-/* Realization of Obstacle Avoidance Mode*/
-void loop() {
+  // start a cycle
 
 
-    int distance_value = robot.getDistance();
-    bool turnFlag = true;
+
+  // walk until an obstacle is found
+  flag = false;
+  while(distance > 10 && flag == false) {
+
+    // make a step
+    robot.walk(1,1);
+
+    // see with sensors
+    distance = robot.getDistance();
+    ir_L = robot.irLeft();
+    ir_R = robot.irRight();
+
+    if( (ir_L >= threshold_ir || ir_R  >= threshold_ir) ) {
+          // obstacle
+          flag = true;
+        } else {
+          // free around
+          flag = false;
+        } 
     
-    robot.servoAttach();
-    if (distance_value >= 1 && distance_value <= 250)
-    {
-        int st188Val_L = robot.irLeft();
-        int st188Val_R = robot.irRight();
-        if (st188Val_L >= THRESHOLD_IR && st188Val_R >= THRESHOLD_IR)
-        {
-            // Obstacle everywhere go back 3 steps
-            robot.walk(3, -1);
-            if (turnFlag)
-            {
-                // Go on the right (1), turn 3 steps right
-                robot.turn(3, 1);
-            }
-            else
-            {
-                // Go on the left (2), turn 3 steps left
-                robot.turn(3, -1);
-            }
-        }
-        else if (st188Val_L >= THRESHOLD_IR && st188Val_R < THRESHOLD_IR)
-        {
-            // Obstacle on the left, turn 3 steps right
-            turnFlag = true;
-            robot.turn(3, 1);
-        }
-        else if (st188Val_L < THRESHOLD_IR && st188Val_R >= THRESHOLD_IR)
-        {
-            // Obstacle on the right, turn 3 steps left
-            turnFlag = false;
-            robot.turn(3, -1);
-        }
-        else if (st188Val_L < THRESHOLD_IR && st188Val_R < THRESHOLD_IR)
-        {
-            if (distance_value < 5)
-            {
-                // Obstacle in front, go back 3 steps
-                robot.walk(3, -1);
-                if (turnFlag)
-                {
-                    // Go on the right, turn 3 steps right
-                    robot.turn(3, 1);
-                }
-                else
-                {
-                    // Go on the left, turn 3 steps left
-                    robot.turn(3, -1);
-                }
-            }
-            else if (distance_value >= 5 && distance_value <= 20)
-            {
-                // Obstacle in front 5<x<20");
-                if (turnFlag)
-                {
-                    // Go on the right, turn 1 step right
-                    robot.turn(1, 1);
-                }
-                else
-                {
-                    // Go on the left, turn1 steps left
-                    robot.turn(1, -1);
-                }
-            }
-            else
-            {
-                // Go on, free way, walk 1 step
-                robot.walk(1, 1);
-            }
-        }
-    }
-    else
-    {
-        // Stop");
-        robot.home();
-    }
+  }
 
-    robot.servoDetach();
 
+  // turn left or right with ir, until freeway
+  int dir = 0;
+  if (flag) {
+    // obstacle is near, seen with ir
+    
+    if ( ir_R >= threshold_ir ) {
+      // obstacle on the right
+      dir = -1;
+    } else if ( ir_L >= threshold_ir ) {
+      // obstacle on the left
+      dir = 1;
+    }
+    
+  } else {
+    // obstacle is "far" at 8-9 cm
+    
+    // choose a random turn direction (1 or -1)
+    dir = random(1,3);
+    if(dir == 2) dir = -1;
+    
+  }
+
+
+
+  while (distance <=10 || flag == true) {
+
+    // turn around to see a free way
+    robot.turn(1,dir);
+    
+    distance = robot.getDistance();
+    ir_L = robot.irLeft();
+    ir_R = robot.irRight();
+    if( (ir_L >= threshold_ir || ir_R  >= threshold_ir) ) {
+      flag = true;
+    } else {
+      flag = false;
+    }
+    
+  }
+
+  // restart...
+  
 }
 
 
+void loop()
+{
+
+  obstacleMode2();
+  
+}
