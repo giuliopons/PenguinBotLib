@@ -1,11 +1,11 @@
 # PenguinBotLib refactor
 
-Refactoring of the original Elegoo code for the PenguinBot version 2.
+## Disclaimer
+I decided to rewrite the original files of the Elegoo Penguin bot 2.0 kit, because I have to teach a robotic course to beginner students and I need a simple way to start play witj the Elegoo kit, and make the robot walk, turn, measure distance, etc.. The original code is too complex for my students, so I made this version.
 
 The original library is available at this address:
 https://www.elegoo.com/blogs/arduino-projects/elegoo-samrt-robot-penguin-bot-tutorial
 
-I decided to rewrite the original files because I have to teach a course to beginner students and I need a simple way to start play and make the robot walk, turn, measure distance, etc..
 
 ![image](https://github.com/giuliopons/PenguinBot/assets/1871627/f9962769-78e2-47cd-b678-49f4350c4cf7)
 
@@ -18,11 +18,13 @@ Some of the things I've changed:
 * made t (time unit) optional from functions, to simplify usage
 * also changed volume functionalities
 * pack everything into an Arduino IDE library, with examples
-* the `PeguinBot.ino` now is an example and has the original functionalities of the original software
-* added more examples and recreated the examples with new library
 * added methods to access sensor values (ir, distance and battery)
+* added method to turn on and off the light
+* the original `PeguinBot.ino` now is an example file and it has all the original functionalities of the original software
+* added more examples
+* added more sounds
 
-Library files:
+## Library files:
 
 * `Penguin` (.h, .cpp) : main library to access the basic movements of the robot and the sensors
 * `Oscillator` (.j, .cpp) : Juan Gonzalez-Gomez oscillator library to move servos in sync
@@ -30,11 +32,17 @@ Library files:
 * `NeoSWSerial` (.h, .cpp) : library to perform software serial communication via specific pins, used for audio
 * `MsTimer2` (.h, .cpp) : library to handle a timer function to monitor Serial communication between BT and robot throught pins 0,1
 
-Examples:
+## Examples:
 
-* `SensorsCheck` : show alues of sensors
-* `Followmode`.ino : follow a near target
-* `ObstacleMode`.ino : avoid an obstacle
-* `Walkround`.ino : walk around if there are no obstacles
-* `PenguinBot` : refactor of the original code with all functionalities
-* `WithoutLibs` : an example of accessing servos and sensors without using libs
+* `SensorsCheck.ino` : show alues of sensors
+* `Followmode.ino` : follow a near target
+* `ObstacleMode.ino` : avoid an obstacle
+* `ObstacleModeWithSounds.ino` : avoid an obstacle
+* `Walkround.ino` : walk around if there are no obstacles
+* `PenguinBot.ino`: refactor of the original code with all functionalities
+* `WithoutLibs.ino` : an example of accessing servos and sensors without using libs
+
+## Mp3 files note:
+
+The first 7 files are the original mp3 files from Elegoo Kit. The other mp3 come around from the web from r2d2 library (https://www.101soundboards.com/) and some other sound effects from free libraries.
+
