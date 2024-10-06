@@ -1,13 +1,15 @@
-# PenguinBotLib refactor
-
-## Disclaimer
-I decided to rewrite the original files of the Elegoo Penguin bot 2.0 kit, because I have to teach a robotic course to beginner students and I need a simple way to start play witj the Elegoo kit, and make the robot walk, turn, measure distance, etc.. The original code is too complex for my students, so I made this version.
-
-The original library is available at this address:
-https://www.elegoo.com/blogs/arduino-projects/elegoo-samrt-robot-penguin-bot-tutorial
-
+# PenguinBotLib remake
 
 ![image](https://github.com/giuliopons/PenguinBot/assets/1871627/f9962769-78e2-47cd-b678-49f4350c4cf7)
+
+### Disclaimer
+Hi. I rewrited the original files of the Elegoo Penguin bot 2.0 kit because I have to teach a robotic course to young beginner students and I need a simple way to start play with the Elegoo kit: for example, I need to make the robot walk, turn, measure distance, etc. with a few commands and the original code is too complex for my students, so I made this Arduino lib.
+
+Please, consider that this code is free and comes as it is and it's only for educational purposes, if any of the libraries reused for this repo violates some rights, please contact me to remove.
+
+The original library for Elegoo Penguin Bot 2.0 is available at this address:
+https://www.elegoo.com/blogs/arduino-projects/elegoo-samrt-robot-penguin-bot-tutorial
+
 
 Some of the things I've changed:
 
