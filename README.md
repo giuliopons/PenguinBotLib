@@ -17,7 +17,7 @@ Some of the things I've changed:
 * removed not used code (functions, variables, defines)
 * renamed functions with more correct names (ex: ir is infrared, but in Penguin v.2 there is bluetooth not ir)
 * separated most of the code from main `PeguinBot.ino` file to `penguin.cpp` and `penguin.h` which now is a class
-* made t (time unit) optional from functions, to simplify usage
+* made t (time unit) optional for class methods, to simplify usage
 * also changed volume functionalities
 * pack everything into an Arduino IDE library, with examples
 * added methods to access sensor values (ir, distance and battery)
