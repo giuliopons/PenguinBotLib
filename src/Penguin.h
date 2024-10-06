@@ -103,6 +103,10 @@ class Penguin {
     int getThresholdIr();
     int irLeft();
     int irRight();
+
+    /* light */
+    void indicatorOn();
+    void indicatorOff();
     
 
     double getBatteryLevel();

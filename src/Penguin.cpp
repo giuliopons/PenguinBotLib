@@ -1015,6 +1015,14 @@ int Penguin::getThresholdIr() {
 }
 
 
+void Penguin::indicatorOff() {
+    digitalWrite(INDICATOR_LED_PIN, LOW);
+}
+
+void Penguin::indicatorOn() {
+    digitalWrite(INDICATOR_LED_PIN, HIGH);
+}
+
 /*
 read ir data and perform mean... never used?
 */
@@ -1076,19 +1084,19 @@ void Penguin::Test_voltageMeasure(void) //Realization of Voltage Detection
 
     if (voltageMeasure_flag)
     {
-        digitalWrite(INDICATOR_LED_PIN, LOW);
+        indicatorOff();
     }
     else
     {
         if (is_flag)
         {
             is_flag = false;
-            digitalWrite(INDICATOR_LED_PIN, HIGH);
+            indicatorOn();
         }
         else
         {
             is_flag = true;
-            digitalWrite(INDICATOR_LED_PIN, LOW);
+            indicatorOff();
         }
     }
 }
