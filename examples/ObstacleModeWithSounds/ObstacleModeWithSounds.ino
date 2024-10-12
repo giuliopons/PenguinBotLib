@@ -1,6 +1,6 @@
 #include "MY1690_16S.h"     // mp3 chip lib
 
-#include "Penguin.h"
+#include "PenguinBotLib.h"
 
 /* Hardware interface mapping mp3 */
 #define SOFTWARE_RXD A2 //Software implementation of serial interface (audio module driver interface)

@@ -4,7 +4,7 @@
 #include "MsTimer2.h"       // timer lib used for bluetooth interaction
 #include "MY1690_16S.h"     // mp3 chip lib
 
-#include "Penguin.h"
+#include "PenguinBotLib.h"
 
 /* Serial Bluetooth Communication Control Command Data Frame*/
 
