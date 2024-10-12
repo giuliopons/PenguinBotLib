@@ -13,7 +13,7 @@ Penguin robot;
 void setup()
 {
   Serial.begin(9600);
-
+  delay(1000);
   mp3Serial.begin(9600);
   mp3.init();
  
