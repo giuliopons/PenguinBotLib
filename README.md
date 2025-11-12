@@ -44,6 +44,7 @@ Some of the things I've changed:
 * `Walkround.ino` : walk around if there are no obstacles
 * `PenguinBot.ino`: refactor of the original code with all functionalities
 * `WithoutLibs.ino` : an example of accessing servos and sensors without using libs
+* `SkyRobot.ino` : a shy robot that tries to avoid you
 
 ## Mp3 files note:
 
