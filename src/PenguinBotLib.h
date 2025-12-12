@@ -41,6 +41,7 @@
 #include "Oscillator.h"     // for serovs movements
 #include <EEPROM.h>         // for servo fine tunings values stored in EEPROM
 
+typedef void (*DelayHookFn)();
 
 class Penguin {
   public:
@@ -113,6 +114,7 @@ class Penguin {
     void Test_voltageMeasure(void);
     //void st188Adjust(int dis);
 
+    void setDelayHook(DelayHookFn fn);
 
   private:
     /* fine-tuning temporary storage variables*/
@@ -152,6 +154,7 @@ class Penguin {
 
     unsigned long voltageMeasureTime;
 
+    DelayHookFn delayHook = nullptr;
   
 };
 

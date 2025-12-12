@@ -17,7 +17,12 @@ Penguin::Penguin() {
 
 }
 
- 
+/**
+ *   hook for external function called during movements through "delays"
+ */
+void Penguin::setDelayHook(DelayHookFn fn) {
+    delayHook = fn;
+}
 
 /**
  * a delay that could be interrupted by bluetooth control
@@ -30,6 +35,7 @@ bool Penguin::delays(unsigned long ms)
         {
             return true;
         }
+		if (delayHook) delayHook();   // <-- hook
         delay(1);
     }
     return false;
